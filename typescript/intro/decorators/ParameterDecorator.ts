@@ -6,6 +6,6 @@ export function ParameterDecorator(
     console.log(
         `Decorating parameter ${propertyKey}` +
         ` (index ${parameterIndex})` +
-        ` from ${target}`
+        ` from ${target.constructor.name}`
     );
 }
