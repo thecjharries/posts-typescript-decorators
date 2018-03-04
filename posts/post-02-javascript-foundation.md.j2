@@ -109,6 +109,52 @@ As it stands, `__decorate` isn't easy to grok. Let's clean it up a bit to see ho
 
 ### Parameter Decorators
 
+To explore parameter decorators, let's build an uncomplicated logger.
+
+{{
+    highlight_block(
+        'typescript/foundation/parameter/main.ts',
+        blob_path = 'typescript/foundation/parameter/main.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'main.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/parameter/main.ts',
+    )
+}}
+
+{{ shell_session('$ tsc -p tsconfig.json') }}
+
+{{
+    highlight_block(
+        'typescript/foundation/parameter/main.js',
+        blob_path = 'typescript/foundation/parameter/main.js',
+        explicit_lexer_name = 'JavascriptLexer',
+        title = 'main.js',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/parameter/main.js',
+    )
+}}
+
+The `__decorate` call is full of `__param` calls. That's a new function. Like `__decorate`, `__param` is [stored deep in the compiler](https://github.com/Microsoft/TypeScript/blob/v2.7.2/src/compiler/transformers/ts.ts#L3627).
+
+{{
+    highlight_block('''
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+''',
+        explicit_lexer_name = 'JavascriptLexer',
+        title = 'paramHelper',
+        external_source_link = 'https://github.com/Microsoft/TypeScript/blob/v2.7.2/src/compiler/transformers/ts.ts#L3627'
+)
+}}
+
+`__param` is [only used by parameter decorators](https://github.com/Microsoft/TypeScript/blob/v2.7.2/src/compiler/transformers/ts.ts#L1609), unlike `__decorate`, which is used by all. Like `__decorate`, `__param`'s assignment is guarded. When created, `__param` becomes a factory that takes `target` and `propertyKey` as input with fixed `decorator` and `paramIndex`.
+
+Returning to [line 10](https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/parameter/main.js#L10), after the `__decorate` and `__param` declarations, we see a tidier `LogParameter` and `ParameterDemoClass`. All of the TS syntactic sugar has been removed for a faster, vanilla JS experience.
+
+We're mainly interested in the `__decorate` call itself. [On line 21](https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/parameter/main.js#L21), the `decorators` array has been filled with `__param` calls. This converts the unique signature of parameter decorators into the standard `(target, propertyKey, descriptor)` format, albeit without a descriptor. Similarly, the decoration is happening on `logThis` (which owns the parameter) without a descriptor.
+
+All of this together means parameter decorators really don't do much for us. We can verify a parameter has been used. We don't have access to the value it was used with. Returns from parameter decorators [are ignored](https://www.typescriptlang.org/docs/handbook/decorators.html#parameter-decorators) which means any changes we attempt will persist beyond this decorator. All that being said, there are some very good uses for the limited access we have, which will be explored more in the Parameter Decorator post (TODO!).
+
 ### Property Decorators
 
 ### Method Decorators
