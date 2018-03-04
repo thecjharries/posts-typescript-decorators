@@ -5,6 +5,7 @@ build
 node_modules
 package.json
 yarn.lock
+typescript/**/*.js
 
 # Everything below pulled directly from
 # https://github.com/github/gitignore/blob/master/Python.gitignore
