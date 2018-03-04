@@ -1,3 +1,6 @@
+// Pulled from https://github.com/Microsoft/TypeScript/blob/v2.7.2/src/compiler/transformers/ts.ts#L3577
+// Punctuation and spacing added to improve readability
+// Original licensed under https://github.com/Microsoft/TypeScript/blob/master/LICENSE.txt
 var __decorate = (
     (this && this.__decorate)
     ||
