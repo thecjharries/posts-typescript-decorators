@@ -14,15 +14,11 @@ class SimpleClass {
     }
 
     @MethodDecorator
-    public bar() {
-        console.log("bar executed");
+    public get bar() {
+        return "bar";
     }
 
     @MethodDecorator
-    public get baz() {
-        return "baz";
-    }
-
     public writeGreeting(
         @ParameterDecorator public greeting: string = "Hello, world"
     ) {
