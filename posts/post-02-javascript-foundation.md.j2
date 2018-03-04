@@ -84,8 +84,8 @@ As it stands, `__decorate` isn't easy to grok. Let's clean it up a bit to see ho
     )
 }}
 
-* [Line 2](https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/pretty/decorate.js#L2) is a guarded assignment; it reuses an existing `__decorate` or builds it from scratch.
-* [Line 5](https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/pretty/decorate.js#L5) counts the call's arguments. Remember the arguments have typically been
+* [Line 5](https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/pretty/decorate.js#L5) is a guarded assignment; it reuses an existing `__decorate` or builds it from scratch.
+* [Line 8](https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/pretty/decorate.js#L8) counts the call's arguments. Remember the arguments have typically been
 
     1. `target`: base object
     2. `propertyKey`: name or symbol of the active object
@@ -93,20 +93,20 @@ As it stands, `__decorate` isn't easy to grok. Let's clean it up a bit to see ho
 
     We can reasonably infer having all three is important.
 
-* [Lines 7-13](https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/pretty/decorate.js#L7) set the initial item that will decorated.
+* [Lines 10-16](https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/pretty/decorate.js#L10) set the initial item that will decorated.
 
     * If there are fewer than three arguments, the item is the `target`, which should be the class.
     * If there are three (or more) arguments, the item is the property descriptor for `target[propertyKey]`.
 
-* [Lines 16-21](https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/pretty/decorate.js#L16) search [the Reflect object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect) for a `decorate` method. I scratched my head over this for a few minutes, then discovered [a great SO answer](https://stackoverflow.com/a/46499259/2877698). It's future planning for the day when `Reflect.decorate` does exist.
+* [Lines 19-24](https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/pretty/decorate.js#L19) search [the Reflect object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect) for a `decorate` method. I scratched my head over this for a few minutes, then discovered [a great SO answer](https://stackoverflow.com/a/46499259/2877698). It's future planning for the day when `Reflect.decorate` does exist.
 
-* [Lines 23-39](https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/pretty/decorate.js#L23) loop over the passed-in decorators and attempt to evaluate them.
+* [Lines 26-42](https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/pretty/decorate.js#L42) loop over the passed-in decorators and attempt to evaluate them.
 
     * Once again, three arguments is important. If there are fewer than three, the decorator is called with `r`, which as we learned above, should be `target`.
     * With more than three arguments, the decorator is called with `r` as the property descriptor (in addition to `target` and `propertyKey`)
     * If there are three exactly, the decorator is called without anything to connect it to the current state (just `target` and `propertyKey`).
 
-* [The `return`](https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/pretty/decorate.js#L41) checks to see if the descriptor has been updated. If there are more than three arguments, the decorator was called with `r`, so it might have changed. If `r` is defined and the `target` is able to define `propertyKey` with the `r`-descriptor, the object will be updated. `r` is always returned.
+* [The `return`](https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/pretty/decorate.js#L44) checks to see if the descriptor has been updated. If there are more than three arguments, the decorator was called with `r`, so it might have changed. If `r` is defined and the `target` is able to define `propertyKey` with the `r`-descriptor, the object will be updated. `r` is always returned.
 
 ## Analysis
 
