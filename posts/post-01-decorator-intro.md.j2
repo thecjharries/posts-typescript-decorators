@@ -1,0 +1,36 @@
+{% extends 'base.md.j2' %}
+{% block lead %}
+{# This post serves as introduction to TypeScript decorators. You should have some familiarity with TypeScript and some object-oriented programing experience. #}
+{% endblock %}
+{% block content %}
+## Decorators
+
+## Simple Example
+
+## Logging Example
+
+## Decorator Factories
+{# ## Decorators
+
+[The decorator pattern](https://sourcemaking.com/design_patterns/decorator) modifies instances of existing objects without affecting the root object or siblings. Typically the pattern extends a base interface by toggling features, setting attributes, or defining roles. Instances of the object being decorated should usually be able to interact, but they don't have to have identical interfaces. Like many foundational patterns, [no one agrees about the Platonic decorator](http://wiki.c2.com/?DecoratorPattern).
+
+TypeScript provides [experimental decorator support](https://www.typescriptlang.org/docs/handbook/decorators.html). [The ECMAScript decorator proposal](https://github.com/tc39/proposal-decorators) has reached [stage 2](https://tc39.github.io/process-document/), so we could see them in vanilla JS eventually. TypeScript provides class, method, parameter, and property decorators. Each can be used to observe the decorated objects (mentioned heavily in the docs). All but the parameter decorator can be used to modify the root object.
+
+TypeScript decorators also provide some [mixin support](https://en.wikipedia.org/wiki/Mixin). Without true [multiple inheritance](https://en.wikipedia.org/wiki/Multiple_inheritance) in JavaScript, combining features can lead to obscenely long prototype chains. TypeScript decorators alleviate that issue by adding behavior at runtime on top of normal inheritance. #}
+{# ## Simple Example
+
+{% for decorator in ['ClassDecorator', 'MethodDecorator', 'ParameterDecorator', 'PropertyDecorator'] %}
+
+{{
+    highlight_block(
+        "typescript/intro/decorators/%s.ts" % decorator,
+        blob_path = "typescript/intro/decorators/%s.ts" % decorator,
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = "decorators/%s.ts" % decorator,
+        external_source_link = "https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/intro/decorators/%s.ts" % decorator
+    )
+}}
+
+{% endfor %}
+#}
+{% endblock %}
