@@ -2,6 +2,9 @@
 !posts-typescript-decorators.sublime-project
 build
 .vagrant
+node_modules
+package.json
+yarn.lock
 
 # Everything below pulled directly from
 # https://github.com/github/gitignore/blob/master/Python.gitignore
