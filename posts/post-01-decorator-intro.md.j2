@@ -13,10 +13,7 @@ TypeScript decorators also provide some [mixin support](https://en.wikipedia.org
 
 ## Simple Example
 
-## Logging Example
-
-## Decorator Factories
-{# ## Simple Example
+First we need to define several decorators. Each signature was taken from [the official docs](https://www.typescriptlang.org/docs/handbook/decorators.html) and will be explained more later (but maybe not this post).
 
 {% for decorator in ['ClassDecorator', 'MethodDecorator', 'ParameterDecorator', 'PropertyDecorator'] %}
 
@@ -31,5 +28,42 @@ TypeScript decorators also provide some [mixin support](https://en.wikipedia.org
 }}
 
 {% endfor %}
-#}
+
+Next we'll need to consume the decorators. The decorators are placed before the object they modify, e.g. `@ClassDecorator class Foo {}`. You could use any of the decorators on any object, but you probably won't see great results unless you hit something like their intended targets. Do note that method decorators are used to modify both normal methods and `(g|s)etter` methods.
+
+{{
+    highlight_block(
+        'typescript/intro/SimpleClass.ts',
+        blob_path = 'typescript/intro/SimpleClass.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'SimpleClass.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/intro/SimpleClass.ts'
+    )
+}}
+
+{{
+    shell_session('''
+$ ts-node SimpleClass.ts
+Decorating property foo from SimpleClass
+Decorating method bar from SimpleClass
+Decorating parameter writeGreeting (index 0) from SimpleClass
+Decorating method writeGreeting from SimpleClass
+Decorating SimpleClass
+Simple class initialized
+Hello, world
+''')
+}}
+
+The execution order is [explained in the docs](https://www.typescriptlang.org/docs/handbook/decorators.html#decorator-evaluation); to summarize,
+
+1. instance parameter, method, and property decorators,
+2. static parameter, method, and property decorators,
+3. constructor parameter decorators, and
+4. class decorators.
+
+
+## Logging Example
+
+## Decorator Factories
+
 {% endblock %}
