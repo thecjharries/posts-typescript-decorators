@@ -1,0 +1,252 @@
+{% extends 'base.md.j2' %}
+{% block lead %}
+This post serves as introduction to TypeScript decorators. It looks at basic decorators, decorator factories, and decorator composition. You should have some familiarity with TypeScript and some object-oriented programing experience.
+{% endblock %}
+{% block content %}
+## Decorators
+
+[The decorator pattern](https://sourcemaking.com/design_patterns/decorator) modifies instances of existing objects without affecting the root object or siblings. Typically the pattern extends a base interface by toggling features, setting attributes, or defining roles. Instances of the object being decorated should usually be able to interact, but they don't have to have identical interfaces. Like many foundational patterns, [no one agrees about the Platonic decorator](http://wiki.c2.com/?DecoratorPattern).
+
+TypeScript provides [experimental decorator support](https://www.typescriptlang.org/docs/handbook/decorators.html). [The ECMAScript decorator proposal](https://github.com/tc39/proposal-decorators) has reached [stage 2](https://tc39.github.io/process-document/), so we could see them in vanilla JS eventually. TypeScript provides class, method, parameter, and property decorators. Each can be used to observe the decorated objects (mentioned heavily in the docs). All but the parameter decorator can be used to modify the root object.
+
+TypeScript decorators also provide some [mixin support](https://en.wikipedia.org/wiki/Mixin). Without true [multiple inheritance](https://en.wikipedia.org/wiki/Multiple_inheritance) in JavaScript, combining features can lead to obscenely long prototype chains. TypeScript decorators alleviate that issue by adding behavior at runtime on top of normal inheritance.
+
+## Configuration
+
+To gain decorator functionality, you'll have to pass a few new options to the TypeScript compiler.
+
+* `target`: The docs mention [some issues below `ES5`](https://www.typescriptlang.org/docs/handbook/decorators.html) (ctrl+f `ES5`). I tend to run `ESNext` while developing.
+* `experimentalDecorators`: This is what enables the functionality.
+* `emitDecoratorMetadata`: This is another expermental feature that [provides decorator metadata](https://www.typescriptlang.org/docs/handbook/decorators.html#metadata).
+
+You can either include the options by hand every time
+
+{{
+    shell_session("""
+$ tsc --target 'ESNext' --experimentalDecorators --emitDecoratorMetadata
+""")
+}}
+
+or you can add them to your `tsconfig.json` once.
+
+{{
+    highlight_block(
+        'typescript/tsconfig.json',
+        blob_path = 'typescript/tsconfig.json',
+        explicit_lexer_name = 'JsonLexer',
+        title = 'tsconfig.json',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/tsconfig.json'
+    )
+}}
+
+## Simple Example
+
+First we need to define several decorators. Each signature was taken from [the official docs](https://www.typescriptlang.org/docs/handbook/decorators.html) and will be explained more later (but maybe not this post).
+
+{% for decorator in ['ClassDecorator', 'MethodDecorator', 'ParameterDecorator', 'PropertyDecorator'] %}
+
+{{
+    highlight_block(
+        "typescript/intro/decorators/%s.ts" % decorator,
+        blob_path = "typescript/intro/decorators/%s.ts" % decorator,
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = "decorators/%s.ts" % decorator,
+        external_source_link = "https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/intro/decorators/%s.ts" % decorator
+    )
+}}
+
+{% endfor %}
+
+Next we'll need to consume the decorators. The decorators are placed before the object they modify, e.g. `@ClassDecorator class Foo {}`. You could use any of the decorators on any object, but you probably won't see great results unless you hit something like their intended targets. Do note that method decorators are used to modify both normal methods and `(g|s)etter` methods.
+
+{{
+    highlight_block(
+        'typescript/intro/SimpleClass.ts',
+        blob_path = 'typescript/intro/SimpleClass.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'SimpleClass.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/intro/SimpleClass.ts'
+    )
+}}
+
+{{
+    shell_session('''
+$ ts-node SimpleClass.ts
+Decorating property foo from SimpleClass
+Decorating method bar from SimpleClass
+Decorating parameter writeGreeting (index 0) from SimpleClass
+Decorating method writeGreeting from SimpleClass
+Decorating SimpleClass
+Simple class initialized
+Hello, world
+''')
+}}
+
+The execution order is [explained in the docs](https://www.typescriptlang.org/docs/handbook/decorators.html#decorator-evaluation); to summarize,
+
+
+1. instance parameter, method, and property decorators;
+2. static parameter, method, and property decorators;
+3. constructor parameter decorators; and
+4. class decorators.
+
+## Decorator Factories
+
+Decorators have well-defined signatures without room for extension. To pass new information into the decorators, we can use [the factory pattern](https://sourcemaking.com/design_patterns/factory_method). A factory provides a uniform creation interface whose details are delegated to and managed by children.
+
+{{
+    highlight_block(
+        'typescript/factories/decorators/Decorator.ts',
+        blob_path = 'typescript/factories/decorators/Decorator.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'decorators/Decorator.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/factories/decorators/Decorator.ts'
+    )
+}}
+
+In this example, `Decorator` takes a string as input and creates a `Function`. Changing the input will create a new `Function`, but all of the `Function`s log the original input string followed by an array containing the args that the child was called with.
+
+{{
+    shell_session('''
+$ ts-node
+> import { Decorator } from "./typescript/factories/decorators/Decorator.ts";
+{}
+> const foo = Decorator("foo")
+undefined
+> foo(1, 2, 3)
+foo [ 1, 2, 3 ]
+undefined
+> const bar = Decorator("bar")
+undefined
+> bar(true, false)
+bar [ true, false ]
+undefined
+''')
+}}
+
+We can use this decorator everywhere thanks to [rest parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters).
+
+{{
+    highlight_block(
+        'typescript/factories/SimpleClass.ts',
+        blob_path = 'typescript/factories/SimpleClass.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'SimpleClass.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/factories/SimpleClass.ts'
+    )
+}}
+
+{{
+    shell_session("""
+$ ts-node SimpleClass.ts
+property [ SimpleClass {}, 'foo', undefined ]
+accessor [ SimpleClass {},
+  'bar',
+  { get: [Function: get bar],
+    set: undefined,
+    enumerable: false,
+    configurable: true } ]
+parameter [ SimpleClass {}, 'writeGreeting', 0 ]
+method [ SimpleClass {},
+  'writeGreeting',
+  { value: [Function: writeGreeting],
+    writable: true,
+    enumerable: false,
+    configurable: true } ]
+class [ [Function: SimpleClass] ]
+Simple class initialized
+Hello, world
+""")
+}}
+
+While this example was fairly simple, decorator factories are capable of much more. Anything you pass to the factory can be used to assemble the decorator. As the decorator's return is used by everything except for parameter decorators, you can customize the instance using anything in the scope. Decorators aren't limited to building up; they can also tear down.
+
+{{
+    highlight_block(
+        'typescript/factories/decorators/MaskMethod.ts',
+        blob_path = 'typescript/factories/decorators/MaskMethod.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'decorators/MaskMethod.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/factories/decorators/MaskMethod.ts'
+    )
+}}
+
+This decorator can hide methods at run time by tweaking [the property descriptor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty#Description) for the method.
+
+{{
+    highlight_block(
+        'typescript/factories/MaskableMethodsClass.ts',
+        blob_path = 'typescript/factories/MaskableMethodsClass.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'MaskableMethodsClass.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/factories/MaskableMethodsClass.ts'
+    )
+}}
+
+{{
+    shell_session('''
+$ ts-node MaskableMethodsClass.ts
+foo undefined
+bar bar() {
+        console.log("bar");
+    }
+''')
+}}
+
+## Composition
+
+[Function composition](https://en.wikipedia.org/wiki/Function_composition) is a very useful tool. It requires two functions, `f: A → B` and `g: C → D`, with some conditions on their domains and ranges. To compose `f` with `g`, i.e. `f(g(x))`, `D` must be a subset of `A`, i.e. the input of `f` must contain the output of `g`.
+
+This is much simpler in code. For the most part, we can compose `f` with `g` when `g`'s return value is identical to `f`'s input (completely ignoring containment because that gets messy). As we've seen, decorators seem to return a single object while they consume an array of arguments. That would suggest they cannot be composed. However, decorators aren't actually being called and run on the stack by themselves. TypeScript surrounds the decorator calls with several other things behind the scenes, which, rather magically, means decorators can be composed with other decorators.
+
+{{
+    highlight_block(
+        'typescript/composition/decorators/Enumerable.ts',
+        blob_path = 'typescript/composition/decorators/Enumerable.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'decorators/Enumerable.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/composition/decorators/Enumerable.ts'
+    )
+}}
+
+This decorator updates the `enumerable` property of methods, showing/hiding them when iterating over the object. To illustrate how it works, this class has two methods that are only decorated once. To illustrate composition, another two are decorated twice.
+
+{{
+    highlight_block(
+        'typescript/composition/SimpleClass.ts',
+        blob_path = 'typescript/composition/SimpleClass.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'SimpleClass.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/composition/SimpleClass.ts'
+    )
+}}
+
+{{
+    shell_session('''
+$ ts-node SimpleClass.ts
+Creating enumerable property factory
+Making isEnumerable enumerable
+Creating enumerable property factory
+Creating non-enumerable property factory
+Making resultIsEnumerable non-enumerable
+Making resultIsEnumerable enumerable
+Creating non-enumerable property factory
+Making isNotEnumerable non-enumerable
+Creating non-enumerable property factory
+Creating enumerable property factory
+Making resultIsNotEnumerable enumerable
+Making resultIsNotEnumerable non-enumerable
+isEnumerable
+resultIsEnumerable
+''')
+}}
+
+The first decorator factory builds its factory first, but executes the factory last. The second decorator's build and execution are sandwiched between the two components of the first. The more decorators chained, the deeper the nesting. To resolve the composition, each call must be finished in turn.
+
+## Recap
+
+Decorators provide a way for children to manage their responsibilities and options. TypeScript supports decorators (experimentally for now) with a very simple interface. When basic decorators don't cut it, the vanilla options can be extended with decorator factories. Composing decorators with decorators allows us to combine multiple decorators on the same object.
+
+I think I'm going to look at the generated JavaScript next. Don't hold me to that.
+
+{% endblock %}
