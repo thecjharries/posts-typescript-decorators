@@ -11,7 +11,7 @@ TypeScript provides [experimental decorator support](https://www.typescriptlang.
 
 TypeScript decorators also provide some [mixin support](https://en.wikipedia.org/wiki/Mixin). Without true [multiple inheritance](https://en.wikipedia.org/wiki/Multiple_inheritance) in JavaScript, combining features can lead to obscenely long prototype chains. TypeScript decorators alleviate that issue by adding behavior at runtime on top of normal inheritance.
 
-## `tsconfig`
+## Configuration
 
 To gain decorator functionality, you'll have to pass a few new options to the TypeScript compiler.
 
@@ -19,11 +19,15 @@ To gain decorator functionality, you'll have to pass a few new options to the Ty
 * `experimentalDecorators`: This is what enables the functionality.
 * `emitDecoratorMetadata`: This is another expermental feature that [provides decorator metadata](https://www.typescriptlang.org/docs/handbook/decorators.html#metadata).
 
+You can either include the options by hand every time
+
 {{
     shell_session("""
 $ tsc --target 'ESNext' --experimentalDecorators --emitDecoratorMetadata
 """)
 }}
+
+or you can add them to your `tsconfig.json` once.
 
 {{
     highlight_block(
