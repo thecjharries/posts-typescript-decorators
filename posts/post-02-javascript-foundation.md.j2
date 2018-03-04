@@ -23,7 +23,7 @@ I'll be using this `tsconfig.json` throughout the post.
 
 ## From the Source
 
-Decorators are built from stored, prebuilt JavaScript. [The `decorateHelper`](https://github.com/Microsoft/TypeScript/blob/v2.7.2/src/compiler/transformers/ts.ts#L3577), deep in the compiler, exports the `__decorate` function wherever it needs to go. The same function is used for all decorator types.
+Decorators begin with stored, prebuilt JavaScript. [The `decorateHelper`](https://github.com/Microsoft/TypeScript/blob/v2.7.2/src/compiler/transformers/ts.ts#L3577), deep in the compiler, exports the `__decorate` function wherever it needs to go. The same function is used for all decorator types.
 
 ### Raw
 
@@ -251,4 +251,6 @@ There's not much to logging a class name.
 Class decorators can directly affect the classes they decorate by modifying their return, so you won't hear me complaining about this one. The compiled result is the simplest to read, which is an added bonus.
 
 ## Recap
+
+TypeScript builds all the decorators from the stored `__decorate` code. `__decorate` is used by the all the decorators; `__param` pops up with parameter decorators to transform their odd signature into something useful. Logging decorators are very easy to code. Without frills, parameter and property decorators are useful to monitor application flow. Method and class decorators can make simple changes without too much trouble.
 {% endblock %}
