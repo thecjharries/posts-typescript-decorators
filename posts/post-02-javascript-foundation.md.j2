@@ -1,8 +1,11 @@
 {% extends 'base.md.j2' %}
 {% block lead %}
+This post looks at how TypeScript compiles decorators. It pulls the raw JavaScript from the compiler and breaks down the result. It has basic decorator examples of each type to examine the JavaScript output.
 {% endblock %}
 {% block content %}
 ## Why Look at the JavaScript?
+
+A little bit of perspective is never a bad thing. I often forget that JavaScript is somewhere in the toolchain because `ts-node` keeps me so far removed. Looking at how the compiler handles decorators will shed some light on the process and make debugging the inevitable issues easier.
 
 ## Configuration
 
