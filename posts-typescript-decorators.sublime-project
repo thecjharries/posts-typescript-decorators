@@ -19,5 +19,17 @@
             "working_dir": "${project_path}",
             "cmd": ["python", "-u", "compiler.py"]
         },
+        {
+            "cmd":
+            [
+                "./node_modules/.bin/ts-node",
+                "$file"
+            ],
+            "name": "Execute TS file",
+            "selector": "source.ts",
+            "syntax": "Packages/ANSIescape/ANSI.tmLanguage",
+            "target": "ansi_color_build",
+            "working_dir": "$project_path"
+        }
     ]
 }
