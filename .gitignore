@@ -6,6 +6,7 @@ node_modules
 package.json
 yarn.lock
 typescript/**/*.js
+scratch.*
 
 # Everything below pulled directly from
 # https://github.com/github/gitignore/blob/master/Python.gitignore
