@@ -193,5 +193,54 @@ bar bar() {
 ''')
 }}
 
+## Composition
+
+[Function composition](https://en.wikipedia.org/wiki/Function_composition) is a very useful tool. It requires two functions, `f: A → B` and `g: C → D`, with some conditions on their domains and ranges. To compose `f` with `g`, i.e. `f(g(x))`, `D` must be a subset of `A`, i.e. the input of `f` must contain the output of `g`.
+
+This is much simpler in code. For the most part, we can compose `f` with `g` when `g`'s return value is identical to `f`'s input (completely ignoring containment because that gets messy). As we've seen, decorators seem to return a single object while they consume an array of arguments. That would suggest they cannot be composed. However, decorators aren't actually being called and run on the stack by themselves. TypeScript surrounds the decorator calls with several other things behind the scenes, which, rather magically, means decorators can be composed with other decorators.
+
+{{
+    highlight_block(
+        'typescript/composition/decorators/Enumerable.ts',
+        blob_path = 'typescript/composition/decorators/Enumerable.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'decorators/Enumerable.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/composition/decorators/Enumerable.ts'
+    )
+}}
+
+This decorator updates the `enumerable` property of methods, showing/hiding them when iterating over the object. To illustrate how it works, this class has two methods that are only decorated once. To illustrate composition, another two are decorated twice.
+
+{{
+    highlight_block(
+        'typescript/composition/SimpleClass.ts',
+        blob_path = 'typescript/composition/SimpleClass.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'SimpleClass.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/composition/SimpleClass.ts'
+    )
+}}
+
+{{
+    shell_session('''
+$ ts-node SimpleClass.ts
+Creating enumerable property factory
+Making isEnumerable enumerable
+Creating enumerable property factory
+Creating non-enumerable property factory
+Making resultIsEnumerable non-enumerable
+Making resultIsEnumerable enumerable
+Creating non-enumerable property factory
+Making isNotEnumerable non-enumerable
+Creating non-enumerable property factory
+Creating enumerable property factory
+Making resultIsNotEnumerable enumerable
+Making resultIsNotEnumerable non-enumerable
+isEnumerable
+resultIsEnumerable
+''')
+}}
+
+The first decorator factory builds its factory first, but executes the factory last. The second decorator's build and execution are sandwiched between the two components of the first. The more decorators chained, the deeper the nesting. To resolve the composition, each call must be finished in turn.
 
 {% endblock %}
