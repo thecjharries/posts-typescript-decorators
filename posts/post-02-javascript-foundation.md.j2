@@ -157,6 +157,34 @@ All of this together means parameter decorators really don't do much for us. We 
 
 ### Property Decorators
 
+In strict mode, property decorators are also fairly limited. I'll be covering that difference later; check out [this example](https://gist.github.com/remojansen/16c661a7afd68e22ac6e#file-property_decorator-ts) to get a feel for things that won't work in strict mode.
+
+Once again, building a simple, logging decorator is a good way to explore.
+
+{{
+    highlight_block(
+        'typescript/foundation/property/main.ts',
+        blob_path = 'typescript/foundation/property/main.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'main.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/property/main.ts',
+    )
+}}
+
+{{ shell_session('$ tsc -p tsconfig.json') }}
+
+{{
+    highlight_block(
+        'typescript/foundation/property/main.js',
+        blob_path = 'typescript/foundation/property/main.js',
+        explicit_lexer_name = 'JavascriptLexer',
+        title = 'main.js',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/property/main.js',
+    )
+}}
+
+Below `__decorate`'s declaration and the simplified core logic, `__decorate`'s call cements how limited the property decorator appears. `LogProperty` isn't called with a property descriptor so any modifications it makes will persist beyond the decorator. `__decorate`'s final argument, `void 0`, reiterates that. Once again, `__decorate` has left us with solid observation options.
+
 ### Method Decorators
 
 ### Class Decorators
