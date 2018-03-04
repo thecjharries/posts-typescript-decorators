@@ -80,14 +80,114 @@ Hello, world
 
 The execution order is [explained in the docs](https://www.typescriptlang.org/docs/handbook/decorators.html#decorator-evaluation); to summarize,
 
+
 1. instance parameter, method, and property decorators,
 2. static parameter, method, and property decorators,
 3. constructor parameter decorators, and
 4. class decorators.
 
-
-## Logging Example
-
 ## Decorator Factories
+
+Decorators have well-defined signatures without room for extension. To pass new information into the decorators, we can use [the factory pattern](https://sourcemaking.com/design_patterns/factory_method). A factory provides a uniform creation interface whose details are delegated to and managed by children.
+
+{{
+    highlight_block(
+        'typescript/factories/decorators/Decorator.ts',
+        blob_path = 'typescript/factories/decorators/Decorator.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'decorators/Decorator.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/factories/decorators/Decorator.ts'
+    )
+}}
+
+In this example, `Decorator` takes a string as input and creates a `Function`. Changing the input will create a new `Function`, but all of the `Function`s log the original input string followed by an array containing the args that the child was called with.
+
+{{
+    shell_session('''
+$ ts-node
+> import { Decorator } from "./typescript/factories/decorators/Decorator.ts";
+{}
+> const foo = Decorator("foo")
+undefined
+> foo(1, 2, 3)
+foo [ 1, 2, 3 ]
+undefined
+> const bar = Decorator("bar")
+undefined
+> bar(true, false)
+bar [ true, false ]
+undefined
+''')
+}}
+
+We can use this decorator everywhere thanks to [rest parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters).
+
+{{
+    highlight_block(
+        'typescript/factories/SimpleClass.ts',
+        blob_path = 'typescript/factories/SimpleClass.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'SimpleClass.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/factories/SimpleClass.ts'
+    )
+}}
+
+{{
+    shell_session("""
+$ ts-node SimpleClass.ts
+property [ SimpleClass {}, 'foo', undefined ]
+accessor [ SimpleClass {},
+  'bar',
+  { get: [Function: get bar],
+    set: undefined,
+    enumerable: false,
+    configurable: true } ]
+parameter [ SimpleClass {}, 'writeGreeting', 0 ]
+method [ SimpleClass {},
+  'writeGreeting',
+  { value: [Function: writeGreeting],
+    writable: true,
+    enumerable: false,
+    configurable: true } ]
+class [ [Function: SimpleClass] ]
+Simple class initialized
+Hello, world
+""")
+}}
+
+While this example was fairly simple, decorator factories are capable of much more. Anything you pass to the factory can be used to assemble the decorator. As the decorator's return is used by everything except for parameter decorators, you can customize the instance using anything in the scope. Decorators aren't limited to building up; they can also tear down.
+
+{{
+    highlight_block(
+        'typescript/factories/decorators/MaskMethod.ts',
+        blob_path = 'typescript/factories/decorators/MaskMethod.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'decorators/MaskMethod.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/factories/decorators/MaskMethod.ts'
+    )
+}}
+
+This decorator can hide methods at run time by tweaking [the property descriptor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty#Description) for the method.
+
+{{
+    highlight_block(
+        'typescript/factories/MaskableMethodsClass.ts',
+        blob_path = 'typescript/factories/MaskableMethodsClass.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'MaskableMethodsClass.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/factories/MaskableMethodsClass.ts'
+    )
+}}
+
+{{
+    shell_session('''
+$ ts-node MaskableMethodsClass.ts
+foo undefined
+bar bar() {
+        console.log("bar");
+    }
+''')
+}}
+
 
 {% endblock %}
