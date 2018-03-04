@@ -243,4 +243,10 @@ resultIsEnumerable
 
 The first decorator factory builds its factory first, but executes the factory last. The second decorator's build and execution are sandwiched between the two components of the first. The more decorators chained, the deeper the nesting. To resolve the composition, each call must be finished in turn.
 
+## Recap
+
+Decorators provide a way for children to manage their responsibilities and options. TypeScript supports decorators (experimentally for now) with a very simple interface. When basic decorators don't cut it, the vanilla options can be extended with decorator factories. Composing decorators with decorators allows us to combine multiple decorators on the same object.
+
+I think I'm going to look at the generated JavaScript next. Don't hold me to that.
+
 {% endblock %}
