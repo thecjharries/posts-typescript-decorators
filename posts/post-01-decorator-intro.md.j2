@@ -13,11 +13,6 @@ TypeScript decorators also provide some [mixin support](https://en.wikipedia.org
 
 ## Simple Example
 
-## Logging Example
-
-## Decorator Factories
-{# ## Simple Example
-
 {% for decorator in ['ClassDecorator', 'MethodDecorator', 'ParameterDecorator', 'PropertyDecorator'] %}
 
 {{
@@ -31,5 +26,32 @@ TypeScript decorators also provide some [mixin support](https://en.wikipedia.org
 }}
 
 {% endfor %}
-#}
+
+{{
+    highlight_block(
+        'typescript/intro/SimpleClass.ts',
+        blob_path = 'typescript/intro/SimpleClass.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'SimpleClass.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/intro/SimpleClass.ts'
+    )
+}}
+
+{{
+    shell_session('''
+$ ts-node -P tsconfig.json intro/SimpleClass.ts
+Decorating property foo from SimpleClass
+Decorating method bar from SimpleClass
+Decorating method baz from SimpleClass
+Decorating parameter writeGreeting (index 0) from SimpleClass
+Decorating SimpleClass
+Simple class initialized
+Hello, world
+''');
+}}
+
+## Logging Example
+
+## Decorator Factories
+
 {% endblock %}
