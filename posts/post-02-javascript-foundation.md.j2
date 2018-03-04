@@ -187,7 +187,61 @@ Below `__decorate`'s declaration and the simplified core logic, `__decorate`'s c
 
 ### Method Decorators
 
+Logging decorators are very easy to write.
+
+{{
+    highlight_block(
+        'typescript/foundation/method/main.ts',
+        blob_path = 'typescript/foundation/method/main.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'main.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/method/main.ts',
+    )
+}}
+
+{{ shell_session('$ tsc -p tsconfig.json') }}
+
+{{
+    highlight_block(
+        'typescript/foundation/method/main.js',
+        blob_path = 'typescript/foundation/method/main.js',
+        explicit_lexer_name = 'JavascriptLexer',
+        title = 'main.js',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/method/main.js',
+    )
+}}
+
+Now we're getting somewhere. Method decorators provide a descriptor and update `target[propertyKey]` with changes made to `descriptor` that are returned. While the `__decorate` call ends with a `null`, as we saw above, `__decorate` should pull the proper property descriptor with a `null` tail.
+
+To be fair, there's not a whole lot we can streamline with access to the property descriptor. Any changes made on anything but the descriptor will persist. We do, as always, have some fantastic observation options via `__decorate`, and the code is getting easier to read.
+
 ### Class Decorators
+
+There's not much to logging a class name.
+
+{{
+    highlight_block(
+        'typescript/foundation/class/main.ts',
+        blob_path = 'typescript/foundation/class/main.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'main.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/class/main.ts',
+    )
+}}
+
+{{ shell_session('$ tsc -p tsconfig.json') }}
+
+{{
+    highlight_block(
+        'typescript/foundation/class/main.js',
+        blob_path = 'typescript/foundation/class/main.js',
+        explicit_lexer_name = 'JavascriptLexer',
+        title = 'main.js',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/class/main.js',
+    )
+}}
+
+Class decorators can directly affect the classes they decorate by modifying their return, so you won't hear me complaining about this one. The compiled result is the simplest to read, which is an added bonus.
 
 ## Recap
 {% endblock %}
