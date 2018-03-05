@@ -15,10 +15,10 @@ This is the code behind a series of posts about TypeScript decorators.
 
 1. [Decorator Introduction](https://blog.wizardsoftheweb.pro/typescript-decorators-introduction)
 2. [JavaScript Foundation](https://blog.wizardsoftheweb.pro/typescript-decorators-javascript-foundation)
+2. [Reflection](https://blog.wizardsoftheweb.pro/typescript-decorators-reflection)
 
 ## Want to Do
 
-* Metadata and Reflection
 * Property Decorators
 * Method Decorators
 * Parameter Decorators

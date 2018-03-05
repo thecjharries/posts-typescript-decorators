@@ -1,0 +1,205 @@
+{% extends 'base.md.j2' %}
+{% block lead %}
+This post takes a cursory look at reflection with TypeScript. Its primary focus is how reflection can be used with TypeScript decorators.  It introduces `Reflect`, `reflect-metadata`, and some miscellaneous related components.
+{% endblock %}
+{% block content %}
+## Overview
+
+[Reflection](https://en.wikipedia.org/wiki/Reflection_(computer_programming)) is the capacity of code to inspect and modify itself while running. Reflection implies (typically) that the code has a secondary interface with which to access everything. [JavaScript's `eval` function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval) is a great example; an arbitrary string is converted (hopefully) into meaningful elements and executed.
+
+### `Reflect`
+
+ECMAScript 2015 added [the `Reflect` global](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect). While might seem like [a rehashed `Object`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object), `Reflect` adds some very useful reflection functionality.
+
+{{
+    highlight_block(
+        'typescript/reflection/overview/reflect-own-keys.ts',
+        blob_path = 'typescript/reflection/overview/reflect-own-keys.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'ownKeys',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/overview/reflect-own-keys.ts',
+    )
+}}
+
+{{
+    highlight_block(
+        'typescript/reflection/overview/reflect-has.ts',
+        blob_path = 'typescript/reflection/overview/reflect-has.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'has',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/overview/reflect-has.ts',
+    )
+}}
+
+{{
+    highlight_block(
+        'typescript/reflection/overview/reflect-delete-property.ts',
+        blob_path = 'typescript/reflection/overview/reflect-delete-property.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'deleteProperty',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/overview/reflect-delete-property.ts',
+    )
+}}
+
+### `emitDecoratorMetadata`
+
+TypeScript comes with a few experimental reflection features. As before, you'll need to enable them first.
+
+{{
+    highlight_block(
+        'typescript/reflection/experimental/tsconfig.json',
+        blob_path = 'typescript/reflection/experimental/tsconfig.json',
+        explicit_lexer_name = 'JsonLexer',
+        title = 'tsconfig.json',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/experimental/tsconfig.json'
+    )
+}}
+
+To investigate the experimental metadata, we'll need to create a decorator. A logging method decorator was the first thing I typed out.
+
+(Note: If you haven't seen [the previous post](https://blog.wizardsoftheweb.pro/typescript-decorators-javascript-foundation), you might benefit from a short skim.)
+
+{{
+    highlight_block(
+        'typescript/reflection/experimental/main.ts',
+        blob_path = 'typescript/reflection/experimental/main.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'main.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/experimental/main.ts',
+    )
+}}
+
+{{ shell_session('$ tsc -p tsconfig.json') }}
+
+{{
+    highlight_block(
+        'typescript/reflection/experimental/main.js',
+        blob_path = 'typescript/reflection/experimental/main.js',
+        explicit_lexer_name = 'JavascriptLexer',
+        title = 'main.js',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/experimental/main.js',
+    )
+}}
+
+The `__metadata` declaration is brand new. It looks similar to the `__decorate` and `__param` declarations that we've seen before. It too comes from [deep in the compiler](https://github.com/Microsoft/TypeScript/blob/v2.7.2/src/compiler/transformers/ts.ts#L3602).
+
+{{
+    highlight_block('''
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+''',
+        explicit_lexer_name = 'JavascriptLexer',
+        title = 'metadataHelper',
+        external_source_link = 'https://github.com/Microsoft/TypeScript/blob/v2.7.2/src/compiler/transformers/ts.ts#L3602'
+)
+}}
+
+`__metadata` attempts to create a `Reflect.metadata` factory (more on that soon). It passes `k`ey-`v`alue pairs to `Reflect.metadata`, which in turn stashes them away to be accessed later. By default, `emitDecoratorMetadata` exposes three new properties:
+
+* `design:type`: the type of the object being decorated (here a `Function`)
+* `design:paramtypes`: an array of types that match either the decorated item's signature or its constructor's signature (here `[Number]`)
+* `design:returntype`: the return type of the object being decorated (here `void 0`)
+
+At the bottom of the file in the `__decorate` call, you'll see the `__metadata` calls. Everything looks great. Except we're missing an important component.
+
+{{ shell_session("""
+$ ts-node -p 'Reflect && Reflect.metadata'
+undefined
+""") }}
+
+### `reflect-metadata`
+
+[The `reflect-metadata` package](https://www.npmjs.com/package/reflect-metadata) aims to extend the available reflection capabilities. While it is an experimental package, it comes recommended in [the official docs](https://www.typescriptlang.org/docs/handbook/decorators.html#metadata) and sees quite a bit of play. It's also necessary to take advantage of the `emitDecoratorMetadata` compiler option, as we've just discovered.
+
+Defining new metadata is very easy. `reflect-metadata` provides both imperative commands and a decorator factory. The decorator factory stores the metadata key-value pair and passes control through.
+
+{{
+    highlight_block(
+        'typescript/reflection/reflect-metadata/basic-usage.ts',
+        blob_path = 'typescript/reflection/reflect-metadata/basic-usage.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'basic-usage.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/reflect-metadata/basic-usage.ts',
+    )
+}}
+
+Accessing the data is also very easy. We can now grab the `emitDecoratorMetadata` metadata that we've been trying to get to.
+
+{{
+    highlight_block(
+        'typescript/reflection/reflect-metadata/decorator-metadata.ts',
+        blob_path = 'typescript/reflection/reflect-metadata/decorator-metadata.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'decorator-metadata.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/reflect-metadata/decorator-metadata.ts',
+    )
+}}
+
+## Example: Validate a Parameter Range
+
+This group of files adds the ability to ensure specific parameters fall within a certain range. `RANGE_KEY` is shared across files so everything can access the stashed ranges.
+
+{{
+    highlight_block(
+        'typescript/reflection/usage/constants.ts',
+        blob_path = 'typescript/reflection/usage/constants.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'constants.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/usage/constants.ts',
+    )
+}}
+
+When a parameter is decorated, add the range to the owning method's metadata.
+
+{{
+    highlight_block(
+        'typescript/reflection/usage/RangeParameter.ts',
+        blob_path = 'typescript/reflection/usage/RangeParameter.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'RangeParameter.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/usage/RangeParameter.ts',
+    )
+}}
+
+This decorates the method that owns the decorated range. When called, it checks for any active ranges. Each watched parameter is checked against the range's endpoints. An error is thrown if the value is out of the range.
+
+{{
+    highlight_block(
+        'typescript/reflection/usage/ValidateRange.ts',
+        blob_path = 'typescript/reflection/usage/ValidateRange.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'ValidateRange.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/usage/ValidateRange.ts',
+    )
+}}
+
+This puts everything together in a simple class.
+
+{{
+    highlight_block(
+        'typescript/reflection/usage/SampleClass.ts',
+        blob_path = 'typescript/reflection/usage/SampleClass.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'SampleClass.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/usage/SampleClass.ts',
+    )
+}}
+
+This runs everything, illustrating how a successful update works and catching a failed update.
+
+{{
+    highlight_block(
+        'typescript/reflection/usage/main.ts',
+        blob_path = 'typescript/reflection/usage/main.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'main.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/usage/main.ts',
+    )
+}}
+
+## Recap
+
+Make sure to skim [metadata coverage in the official docs](https://www.typescriptlang.org/docs/handbook/decorators.html#metadata). Reflection tweaks active code. `Reflect` is a robust tool with applications outside this context. `emitDecoratorMetadata` emits object type, param type, and return type, when `reflect-metadata` is loaded. `reflect-metadata` can easily link disparate portions of your app together via straightfoward key-value matching.
+
+{% endblock %}
