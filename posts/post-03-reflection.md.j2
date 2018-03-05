@@ -115,11 +115,11 @@ Defining new metadata is very easy. `reflect-metadata` provides both a declarati
 
 {{
     highlight_block(
-        'typescript/reflection/reflect-metadata/main.ts',
-        blob_path = 'typescript/reflection/reflect-metadata/main.ts',
+        'typescript/reflection/reflect-metadata/basic-usage.ts',
+        blob_path = 'typescript/reflection/reflect-metadata/basic-usage.ts',
         explicit_lexer_name = 'TypeScriptLexer',
-        title = 'main.ts',
-        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/reflect-metadata/main.ts',
+        title = 'basic-usage.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/reflect-metadata/basic-usage.ts',
     )
 }}
 
@@ -135,15 +135,71 @@ We can now access the `emitDecoratorMetadata` metadata that we've been trying to
     )
 }}
 
+## Examples
 
-### Examples
+### Validate a Parameter Range
 
-## Common Decorators
+This group of files adds the ability to ensure specific parameters fall within a certain range. `RANGE_KEY` is shared across files so everything can access the stashed ranges.
 
-### Validate Type
+{{
+    highlight_block(
+        'typescript/reflection/usage/constants.ts',
+        blob_path = 'typescript/reflection/usage/constants.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'constants.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/usage/constants.ts',
+    )
+}}
 
-### Validate Input
+When a parameter is decorated, add the range to the owning method's metadata.
 
-### Defaults
+{{
+    highlight_block(
+        'typescript/reflection/usage/RangeParameter.ts',
+        blob_path = 'typescript/reflection/usage/RangeParameter.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'RangeParameter.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/usage/RangeParameter.ts',
+    )
+}}
+
+This decorates the method that owns the decorated range. When called, it checks for any active ranges. Each watched parameter is checked against the range's endpoints. An error is thrown if the value is out of the range.
+
+{{
+    highlight_block(
+        'typescript/reflection/usage/ValidateRange.ts',
+        blob_path = 'typescript/reflection/usage/ValidateRange.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'ValidateRange.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/usage/ValidateRange.ts',
+    )
+}}
+
+This puts everything together in a simple class.
+
+{{
+    highlight_block(
+        'typescript/reflection/usage/SampleClass.ts',
+        blob_path = 'typescript/reflection/usage/SampleClass.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'SampleClass.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/usage/SampleClass.ts',
+    )
+}}
+
+This runs everything, illustrating how a successful update works and catching a failed update.
+
+{{
+    highlight_block(
+        'typescript/reflection/usage/main.ts',
+        blob_path = 'typescript/reflection/usage/main.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'main.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/usage/main.ts',
+    )
+}}
+
+
+
 
 {% endblock %}
