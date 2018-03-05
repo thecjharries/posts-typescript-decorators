@@ -40,6 +40,73 @@ ECMAScript 2015 added [the `Reflect` global](https://developer.mozilla.org/en-US
     )
 }}
 
+### `emitDecoratorMetadata`
+
+TypeScript comes with a few experimental reflection features. As before, you'll need to enable them first.
+
+{{
+    highlight_block(
+        'typescript/reflection/experimental/tsconfig.json',
+        blob_path = 'typescript/reflection/experimental/tsconfig.json',
+        explicit_lexer_name = 'JsonLexer',
+        title = 'tsconfig.json',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/experimental/tsconfig.json'
+    )
+}}
+
+To investigate the experimental metadata, we'll need to create a decorator. A logging method decorator was the first thing I typed out.
+
+(Note: If you haven't seen [the previous post](https://blog.wizardsoftheweb.pro/typescript-decorators-javascript-foundation), you might benefit from a short skim.)
+
+{{
+    highlight_block(
+        'typescript/reflection/experimental/main.ts',
+        blob_path = 'typescript/reflection/experimental/main.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'main.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/experimental/main.ts',
+    )
+}}
+
+{{ shell_session('$ tsc -p tsconfig.json') }}
+
+{{
+    highlight_block(
+        'typescript/reflection/experimental/main.js',
+        blob_path = 'typescript/reflection/experimental/main.js',
+        explicit_lexer_name = 'JavascriptLexer',
+        title = 'main.js',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/experimental/main.js',
+    )
+}}
+
+The `__metadata` declaration is brand new. It looks similar to the `__decorate` and `__param` declarations that we've seen before. It too comes from [deep in the compiler](https://github.com/Microsoft/TypeScript/blob/v2.7.2/src/compiler/transformers/ts.ts#L3602).
+
+{{
+    highlight_block('''
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+''',
+        explicit_lexer_name = 'JavascriptLexer',
+        title = 'metadataHelper',
+        external_source_link = 'https://github.com/Microsoft/TypeScript/blob/v2.7.2/src/compiler/transformers/ts.ts#L3602'
+)
+}}
+
+`__metadata` attempts to create a `Reflect.metadata` factory (more on that soon). It passes `k`ey-`v`alue pairs to `Reflect.metadata`, which in turn stashes them away to be accessed later. By default, `emitDecoratorMetadata` exposes three new properties:
+
+* `design:type`: the type of the object being decorated (here a `Function`)
+* `design:paramtypes`: an array of types that match either the decorated item's signature or its constructor's signature (here `[Number]`)
+* `design:returntype`: the return type of the object being decorated (here `void 0`)
+
+At the bottom of the file in the `__decorate` call, you'll see the `__metadata` calls. Everything looks great. Except we're missing an important component.
+
+{{ shell_session("""
+$ ts-node -p 'Reflect && Reflect.metadata'
+undefined
+""") }}
+
 ### `reflect-metadata`
 
 [The `reflect-metadata` package](https://www.npmjs.com/package/reflect-metadata) aims to extend the available reflection capabilities. While it is an experimental package, it comes recommended in [the official docs](https://www.typescriptlang.org/docs/handbook/decorators.html#metadata) and sees quite a bit of play.
