@@ -112,7 +112,7 @@ undefined
 
 [The `reflect-metadata` package](https://www.npmjs.com/package/reflect-metadata) aims to extend the available reflection capabilities. While it is an experimental package, it comes recommended in [the official docs](https://www.typescriptlang.org/docs/handbook/decorators.html#metadata) and sees quite a bit of play. It's also necessary to take advantage of the `emitDecoratorMetadata` compiler option, as we've just discovered.
 
-Defining new metadata is very easy. `reflect-metadata` provides both a declarative API and a decorator. Accessing this data is also very easy.
+Defining new metadata is very easy. `reflect-metadata` provides both imperative commands and a decorator factory. The decorator factory stores the metadata key-value pair and passes control through.
 
 {{
     highlight_block(
@@ -124,7 +124,7 @@ Defining new metadata is very easy. `reflect-metadata` provides both a declarati
     )
 }}
 
-We can now access the `emitDecoratorMetadata` metadata that we've been trying to get to.
+Accessing the data is also very easy. We can now grab the `emitDecoratorMetadata` metadata that we've been trying to get to.
 
 {{
     highlight_block(
