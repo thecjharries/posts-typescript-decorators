@@ -135,9 +135,7 @@ We can now access the `emitDecoratorMetadata` metadata that we've been trying to
     )
 }}
 
-## Examples
-
-### Validate a Parameter Range
+## Example: Validate a Parameter Range
 
 This group of files adds the ability to ensure specific parameters fall within a certain range. `RANGE_KEY` is shared across files so everything can access the stashed ranges.
 
@@ -199,7 +197,8 @@ This runs everything, illustrating how a successful update works and catching a 
     )
 }}
 
+## Recap
 
-
+Make sure to skim [metadata coverage in the official docs](https://www.typescriptlang.org/docs/handbook/decorators.html#metadata). Reflection tweaks active code. `Reflect` is a robust tool with applications outside this context. `emitDecoratorMetadata` emits object type, param type, and return type, when `reflect-metadata` is loaded. `reflect-metadata` can easily link disparate portions of your app together via straightfoward key-value matching.
 
 {% endblock %}
