@@ -4,9 +4,45 @@
 {% block content %}
 ## Overview
 
+[Reflection](https://en.wikipedia.org/wiki/Reflection_(computer_programming)) is the capacity of code to inspect and modify itself while running. Reflection implies (typically) that the code has a secondary interface with which to access everything. [JavaScript's `eval` function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval) is a great example; an arbitrary string is converted (hopefully) into meaningful elements and executed.
+
 ### `Reflect`
 
+ECMAScript 2015 added [the `Reflect` global](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect). While might seem like [a rehashed `Object`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object), `Reflect` adds some very useful reflection functionality.
+
+{{
+    highlight_block(
+        'typescript/reflection/overview/reflect-own-keys.ts',
+        blob_path = 'typescript/reflection/overview/reflect-own-keys.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'ownKeys',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/overview/reflect-own-keys.ts',
+    )
+}}
+
+{{
+    highlight_block(
+        'typescript/reflection/overview/reflect-has.ts',
+        blob_path = 'typescript/reflection/overview/reflect-has.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'has',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/overview/reflect-has.ts',
+    )
+}}
+
+{{
+    highlight_block(
+        'typescript/reflection/overview/reflect-delete-property.ts',
+        blob_path = 'typescript/reflection/overview/reflect-delete-property.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'deleteProperty',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/overview/reflect-delete-property.ts',
+    )
+}}
+
 ### `reflect-metadata`
+
+[The `reflect-metadata` package](https://www.npmjs.com/package/reflect-metadata) aims to extend the available reflection capabilities. While it is an experimental package, it comes recommended in [the official docs](https://www.typescriptlang.org/docs/handbook/decorators.html#metadata) and sees quite a bit of play.
 
 ### Examples
 
