@@ -5,7 +5,7 @@ import { RANGE_KEY } from "./constants";
 export function ValidateRange(
     target: any,
     propertyKey: string,
-    descriptor: PropertyDescriptor
+    descriptor: PropertyDescriptor,
 ) {
     // Store the original value
     const savedValue = descriptor.value;
@@ -16,7 +16,7 @@ export function ValidateRange(
             Reflect.getOwnMetadata(
                 RANGE_KEY,
                 target,
-                propertyKey
+                propertyKey,
             )
             ||
             {}
