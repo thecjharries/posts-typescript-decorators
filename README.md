@@ -32,6 +32,8 @@ This is the code behind a series of posts about TypeScript decorators.
 
 ### Open
 
+* Fix parameter decorator class style
+
 ### Finished
 
 * Create uniform example class names
