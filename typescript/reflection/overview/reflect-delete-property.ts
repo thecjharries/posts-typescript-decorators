@@ -16,6 +16,7 @@
     // { three: 3 }
     // Accidentally try to delete an object
     try {
+        // tslint:disable-next-line:no-eval
         console.log(eval("delete sampleDeleteObject"));
     } catch (error) {
         // do nothing
