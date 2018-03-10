@@ -27,6 +27,8 @@ This is the code behind a series of posts about TypeScript decorators.
 * Method Decorators
 * Class Decorators
 * Where Decorators Work
+* Examples
+    - Property antipattern solution
 
 ## Other TODO
 
