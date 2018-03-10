@@ -33,6 +33,7 @@ This is the code behind a series of posts about TypeScript decorators.
 ### Open
 
 * Fix parameter decorator class style
+* Fix parameter strict mode logic
 
 ### Finished
 
