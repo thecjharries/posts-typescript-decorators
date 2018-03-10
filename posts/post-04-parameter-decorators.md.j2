@@ -105,7 +105,7 @@ To [rehash what's happening under the hood](https://blog.wizardsoftheweb.pro/typ
 
 {{
     shell_session("""
-$ ts-node -P strict/tsconfig.json strict/main.ts
+$ ts-node --project strict/tsconfig.json strict/main.ts
 TypeError: Cannot read property 'constructor' of undefined
 changed in decorator
 """)
@@ -137,7 +137,7 @@ As expected, nothing happens. A function's `this` is not defined [in strict mode
 
 {{
     shell_session("""
-$ ts-node -P not-strict/tsconfig.json not-strict/main.ts
+$ ts-node --project not-strict/tsconfig.json not-strict/main.ts
 this.constructor.name: Object
 target.constructor.name: NotStrictModeClass
 this !== target
