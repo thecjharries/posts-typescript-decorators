@@ -59,7 +59,7 @@ export function Description(description: string) {
         if (
             parameterMetadata[parameterIndex]
             &&
-            parameterMetadata[parameterIndex].name,
+            parameterMetadata[parameterIndex].name
         ) {
             parameterMetadata[parameterIndex].description = description;
         } else {
