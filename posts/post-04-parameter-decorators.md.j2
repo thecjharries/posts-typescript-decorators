@@ -8,7 +8,7 @@ Parameter decorators are the most restricted decorators, both in and out of stri
 
 > [a] parameter decorator can only be used to observe that a parameter has been declared on a method.
 
-Parameter decorators ignore any return, underlining their inability to affect the decorated parameters. [As we saw previously](https://blog.wizardsoftheweb.pro/typescript-decorators-reflection/#examplevalidateaparameterrange), parameter decorators can be used in tandem with other decorators to define extra information about the parameter. By themselves, their effectiveness is limited. [Logging parameter data](https://blog.wizardsoftheweb.pro/typescript-decorators-javascript-foundation/#parameterdecorators) seems to be the best use for a parameter decorator by itself.
+Parameter decorators ignore any return, underscoring their inability to affect the decorated parameters. [As we saw previously](https://blog.wizardsoftheweb.pro/typescript-decorators-reflection/#examplevalidateaparameterrange), parameter decorators can be used in tandem with other decorators to define extra information about the parameter. By themselves, their effectiveness is limited. [Logging parameter data](https://blog.wizardsoftheweb.pro/typescript-decorators-javascript-foundation/#parameterdecorators) seems to be the best use for a parameter decorator by itself.
 
 (If you've got a different or novel use for parameter decorators, I'd love to hear about it. Seriously. I'm really curious to see how other devs are using these. My email's in the footer.)
 
@@ -37,7 +37,7 @@ Global function foo
 ''')
 }}
 
-Even though we've attempted to decorate the global function `foo`, it doesn't work. Notice how the decorated logging is only called once, not twice, and only with `foo1`. I suspect this is related to how all of these things are defined, and will probably be explored in another post.
+Even though we've attempted to decorate the global function `foo`, it doesn't work. Notice how the decorated logging is only called once, not twice, and only with `foo1`. I suspect this is related to how all of these things are defined, and I plan to investigate this more in another post.
 
 ## Signature
 
