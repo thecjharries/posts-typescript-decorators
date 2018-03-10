@@ -4,13 +4,13 @@
 {% block content %}
 ## Overview
 
-In strict mode, property decorators are very similar to [parameter decorators](https://blog.wizardsoftheweb.pro/typescript-decorators-parameter-decorators) in that they're only able to observe declarations. [The official docs](https://www.typescriptlang.org/docs/handbook/decorators.html#property-decorators) state
+Property decorators are very similar to [parameter decorators](https://blog.wizardsoftheweb.pro/typescript-decorators-parameter-decorators) in that they're only able to observe declarations (or rather, should only observe declarations). [The official docs](https://www.typescriptlang.org/docs/handbook/decorators.html#property-decorators) state
 
 > a property decorator can only be used to observe that a property of a specific name has been declared for a class.
 
 Property decorators ignore any return, underscoring their inability to affect the decorated properties. [Similar to parameter decorators](https://blog.wizardsoftheweb.pro/typescript-decorators-reflection/#examplevalidateaparameterrange), property decorators can be used in tandem with other decorators to define extra information about the property. By themselves, their effectiveness is limited. [Logging property data](https://blog.wizardsoftheweb.pro/typescript-decorators-javascript-foundation/#propertydecorators) seems to be the best use for a property decorator by itself.
 
-All bets are off outside of strict mode. Because of the extra flexibility (e.g. `this` is not `undefined`), it's possible to manipulate the property directly.
+Clever abuse of property descriptors can sidestep some of the restrictions on property decorators.
 
 ## Signature
 
@@ -44,17 +44,9 @@ This example is used to explain the signature.
 
 `propertyKey` is the name of the decorated property. It could also be [a `Symbol`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol), depending on how the property is defined on the object. `propertyKey` in the example is `foo`.
 
-## Changing Mode
-
-There's a huge difference between property decorators in and out of strict mode.
-
-To [rehash what's happening under the hood](https://blog.wizardsoftheweb.pro/typescript-decorators-javascript-foundation/#prettifiedandpolished), property decorators have
-
-### Strict Mode
-
-### Not Strict Mode
-
 ## Usage
+
+### Attach Metadata
 
 ## Recap
 
