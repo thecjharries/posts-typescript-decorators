@@ -15,13 +15,13 @@ This is the code behind a series of posts about TypeScript decorators.
 
 1. [Decorator Introduction](https://blog.wizardsoftheweb.pro/typescript-decorators-introduction)
 2. [JavaScript Foundation](https://blog.wizardsoftheweb.pro/typescript-decorators-javascript-foundation)
-2. [Reflection](https://blog.wizardsoftheweb.pro/typescript-decorators-reflection)
+3. [Reflection](https://blog.wizardsoftheweb.pro/typescript-decorators-reflection)
+4. [Parameter Decorators](https://blog.wizardsoftheweb.pro/typescript-decorators-parameter-decorators)
 
 ## Want to Do
 
 * Property Decorators
 * Method Decorators
-* Parameter Decorators
 * Class Decorators
 
 ## License
