@@ -1,5 +1,5 @@
 export function Decorator(type: string) {
-    return function(...args: any[]) {
+    return (...args: any[]) => {
         console.log(type, args);
-    }
+    };
 }

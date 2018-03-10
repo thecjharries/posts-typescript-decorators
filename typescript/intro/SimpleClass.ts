@@ -20,7 +20,7 @@ class SimpleClass {
 
     @MethodDecorator
     public writeGreeting(
-        @ParameterDecorator public greeting: string = "Hello, world"
+        @ParameterDecorator public greeting: string = "Hello, world",
     ) {
         console.log(greeting);
     }

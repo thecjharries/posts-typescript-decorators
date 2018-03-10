@@ -1,10 +1,10 @@
-(function() {
+(() => {
     "use strict";
     const sampleDeleteObject = {
         one: 1,
-        two: 2,
         three: 3,
-    }
+        two: 2,
+    };
 
     // Delete a property with delete
     console.log(delete sampleDeleteObject.one);
@@ -16,6 +16,7 @@
     // { three: 3 }
     // Accidentally try to delete an object
     try {
+        // tslint:disable-next-line:no-eval
         console.log(eval("delete sampleDeleteObject"));
     } catch (error) {
         // do nothing
@@ -25,4 +26,4 @@
     // true
     console.log(sampleDeleteObject);
     // { three: 3 }
-})()
+})();

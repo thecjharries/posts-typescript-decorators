@@ -9,7 +9,7 @@ export class SampleClass {
         @RangeParameter(0, 100)
         newValue: number,
         // Does nothing
-        negative: boolean = false
+        negative: boolean = false,
     ) {
         console.log(newValue);
     }

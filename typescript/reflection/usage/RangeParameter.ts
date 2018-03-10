@@ -4,15 +4,15 @@ import { RANGE_KEY } from "./constants";
 
 export function RangeParameter(
     min: number = 0,
-    max: number = 100
+    max: number = 100,
 ) {
-    return function(
+    return (
         target: any,
         propertyKey: string | symbol,
-        parameterIndex: number
-    ) {
+        parameterIndex: number,
+    ) => {
         // Pull existing metadata (if any)
-        let existingRanges: { [key: number]: number[] } = (
+        const existingRanges: { [key: number]: number[] } = (
             Reflect.getMetadata(RANGE_KEY, target, propertyKey)
             ||
             {}
@@ -21,5 +21,5 @@ export function RangeParameter(
         existingRanges[parameterIndex] = [min, max];
         // Store metadata
         Reflect.defineMetadata(RANGE_KEY, existingRanges, target, propertyKey);
-    }
+    };
 }

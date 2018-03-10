@@ -14,12 +14,16 @@ class ArbitraryMetadataDemoClass {
     public nameOnly(
         @Name("propertyWithNameOnly")
         propertyWithNameOnly: any,
-    ) { }
+    ) {
+        // do nothing
+    }
 
     public descriptionOnly(
         @Description("decorated with Description")
         propertyWithDescriptionOnly: any,
-    ) { }
+    ) {
+        // do nothing
+    }
 
     public usingParameterMetadata(
         @ParameterMetadata(
@@ -27,39 +31,43 @@ class ArbitraryMetadataDemoClass {
             "decorated with ParameterMetadata",
         )
         decoratedWithParameterMetadata: any,
-    ) { }
+    ) {
+        // do nothing
+    }
 
     public chainingDecorators(
         @Name("decoratedViaChain")
         @Description("decorated with Name and Description")
         decoratedViaChain: any,
-    ) { }
+    ) {
+        // do nothing
+    }
 }
 
 // These are not defined on the class
 // names
 console.log(
-    'ArbitraryMetadataDemoClass names:',
+    "ArbitraryMetadataDemoClass names:",
     Reflect.getMetadata(
         PARAMETER_NAME_KEY,
         ArbitraryMetadataDemoClass,
-        )
+    ),
 );
 // descriptions
 console.log(
-    'ArbitraryMetadataDemoClass descriptions:',
+    "ArbitraryMetadataDemoClass descriptions:",
     Reflect.getMetadata(
         PARAMETER_DESCRIPTION_KEY,
         ArbitraryMetadataDemoClass,
-    )
+    ),
 );
 // signature metadata
 console.log(
-    'metadata from ArbitraryMetadataDemoClass signatures:',
+    "metadata from ArbitraryMetadataDemoClass signatures:",
     Reflect.getMetadata(
         PARAMETER_METADATA_KEY,
         ArbitraryMetadataDemoClass,
-    )
+    ),
 );
 // They're defined on an instance
 const arbitraryMetadataDemo = new ArbitraryMetadataDemoClass();
@@ -76,15 +84,15 @@ const METHODS = [
 // Loop over each method
 for (const method of METHODS) {
     // Line break to make things easier to read
-    console.log('---');
+    console.log("---");
     // Log the parameter names
     console.log(
         `${method} names:`,
         Reflect.getMetadata(
             PARAMETER_NAME_KEY,
             arbitraryMetadataDemo,
-            method
-        )
+            method,
+        ),
     );
     // Log the parameter descriptions
     console.log(
@@ -92,8 +100,8 @@ for (const method of METHODS) {
         Reflect.getMetadata(
             PARAMETER_DESCRIPTION_KEY,
             arbitraryMetadataDemo,
-            method
-        )
+            method,
+        ),
     );
     // Log the full signature metadata
     console.log(
@@ -101,8 +109,8 @@ for (const method of METHODS) {
         Reflect.getMetadata(
             PARAMETER_METADATA_KEY,
             arbitraryMetadataDemo,
-            method
-        )
+            method,
+        ),
     );
 }
 

@@ -27,6 +27,7 @@ class SimpleClass {
 
 const demo = new SimpleClass();
 
+// tslint:disable-next-line:forin
 for (const key in demo) {
     console.log(key);
 }
