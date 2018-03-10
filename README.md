@@ -6,6 +6,7 @@ WIP.
 
 - [Finished](#finished)
 - [Want to Do](#wanttodo)
+- [Other TODO](#othertodo)
 - [License](#license)
 
 <!-- /MarkdownTOC -->
@@ -15,14 +16,21 @@ This is the code behind a series of posts about TypeScript decorators.
 
 1. [Decorator Introduction](https://blog.wizardsoftheweb.pro/typescript-decorators-introduction)
 2. [JavaScript Foundation](https://blog.wizardsoftheweb.pro/typescript-decorators-javascript-foundation)
-2. [Reflection](https://blog.wizardsoftheweb.pro/typescript-decorators-reflection)
+3. [Reflection](https://blog.wizardsoftheweb.pro/typescript-decorators-reflection)
+4. [Parameter Decorators](https://blog.wizardsoftheweb.pro/typescript-decorators-parameter-decorators)
 
 ## Want to Do
 
 * Property Decorators
 * Method Decorators
-* Parameter Decorators
 * Class Decorators
+* Where Decorators Work
+
+## Other TODO
+
+* Expand CLI args where possible (e.g. replace `-P` with `--project`)
+* Update `propertyKey`'s type everywhere (i.e. `string | symbol` not `string`)
+* Create uniform example class names
 
 ## License
 
