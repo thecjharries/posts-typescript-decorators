@@ -2,8 +2,8 @@
     "use strict";
     const sampleDeleteObject = {
         one: 1,
-        two: 2,
         three: 3,
+        two: 2,
     };
 
     // Delete a property with delete
