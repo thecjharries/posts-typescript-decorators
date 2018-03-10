@@ -22,6 +22,7 @@ export function ValidateRange(
             {}
         );
         // Check all monitored ranges
+        // tslint:disable-next-line:forin
         for (const key in Reflect.ownKeys(monitoredRanges)) {
             const range = monitoredRanges[key];
             const value = args[key];
