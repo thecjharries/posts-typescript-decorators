@@ -1,0 +1,185 @@
+{% extends 'base.md.j2' %}
+{% block lead %}
+This post takes an in-depth look at property decorators. It examines their signature, provides sample usage, and exposes a common antipattern. Reading the previous posts in the series is encouraged but not necessary.
+{% endblock %}
+{% block content %}
+## Overview
+
+Property decorators are very similar to [parameter decorators](https://blog.wizardsoftheweb.pro/typescript-decorators-parameter-decorators) in that they're only able to observe declarations (or rather, should only observe declarations). [The official docs](https://www.typescriptlang.org/docs/handbook/decorators.html#property-decorators) state
+
+> a property decorator can only be used to observe that a property of a specific name has been declared for a class.
+
+Property decorators ignore any return, underscoring their inability to affect the decorated properties. [Similar to parameter decorators](https://blog.wizardsoftheweb.pro/typescript-decorators-reflection/#examplevalidateaparameterrange), property decorators can be used in tandem with other decorators to define extra information about the property. By themselves, their effectiveness is limited. [Logging property data](https://blog.wizardsoftheweb.pro/typescript-decorators-javascript-foundation/#propertydecorators) seems to be the best use for a property decorator by itself.
+
+A widely used antipattern is to update a property descriptor on `target` in a property decorator. This wreaks havoc on all sorts of things. Instead, property decorators should set metadata that can be consumed elsewhere. Don't use them to do too much.
+
+## Signature
+
+{{
+    highlight_block(
+        'typescript/properties/signature/signature.ts',
+        blob_path = 'typescript/properties/signature/signature.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'signature.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/properties/signature/signature.ts'
+    )
+}}
+
+This example is used to explain the signature.
+
+{{
+    highlight_block(
+        'typescript/properties/signature/signature-example.ts',
+        blob_path = 'typescript/properties/signature/signature-example.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'signature-example.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/properties/signature/signature-example.ts'
+    )
+}}
+
+### `target: any`
+
+`target` is the object that owns the decorated property. `target` in the example is `TargetDemo`.
+
+### `propertyKey: string | symbol`
+
+`propertyKey` is the name of the decorated property. It could also be [a `Symbol`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol), depending on how the property is defined on the object. `propertyKey` in the example is `foo`.
+
+## Usage
+
+As property decorators do not affect the underlying object, their primary use is to create and attach metadata. Consuming said metadata involves other decorators, so it's skipped here. The example below illustrates an easy way to attach metadata to properties.
+
+{{
+    highlight_block(
+        'typescript/properties/usage/arbitrary/constants.ts',
+        blob_path = 'typescript/properties/usage/arbitrary/constants.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'arbitrary/constants.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/properties/usage/arbitrary/constants.ts'
+    )
+}}
+
+First we define the metadata key and `export` it for anything to `import`.
+
+{{
+    highlight_block(
+        'typescript/properties/usage/arbitrary/interfaces.ts',
+        blob_path = 'typescript/properties/usage/arbitrary/interfaces.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'arbitrary/interfaces.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/properties/usage/arbitrary/interfaces.ts'
+    )
+}}
+
+This defines `ISinglePropertyMetadata` and `IAllPropertyMetadata` to streamline manipulation. It's usually better to have types to rely on.
+
+{{
+    highlight_block(
+        'typescript/properties/usage/arbitrary/PropertyMetadata.ts',
+        blob_path = 'typescript/properties/usage/arbitrary/PropertyMetadata.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'arbitrary/PropertyMetadata.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/properties/usage/arbitrary/PropertyMetadata.ts'
+    )
+}}
+
+The `PropertyMetadata` decorator updates both a property's metadata name and description. It consumes an `ISinglePropertyMetadata` object to load the values.
+
+{{
+    highlight_block(
+        'typescript/properties/usage/arbitrary/main.ts',
+        blob_path = 'typescript/properties/usage/arbitrary/main.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'arbitrary/main.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/properties/usage/arbitrary/main.ts'
+    )
+}}
+
+Putting everything together, we can decorate at will.
+
+{{
+    shell_session("""
+$ ts-node arbitrary/main.ts
+Class property metadata: undefined
+Instance property metadata: { foo: { name: 'foo' },
+  bar: { description: 'property bar' },
+  baz: { name: 'baz', description: 'property baz' } }
+""")
+}}
+
+## Antipattern
+
+Property decorators cannot modify the owning object as their return is ignored. Ergo any changes made on `target` are actually made globally. You might have seen [this common property decorator example](https://gist.github.com/remojansen/16c661a7afd68e22ac6e#file-property_decorator-ts); it defines a property on `target` using the decorator's scope to maintain state (note that example will not work in strict mode). However, for a single class, the decorator is only called once. This means any instance of the class reuses the same decorator scope, essentially changing an instance property into a static property that can be updated.
+
+### Example
+
+This will make more sense with an example. Rather than rehash the copypasta that [pops up everywhere](https://stackoverflow.com/q/45830878/2877698), I applied the logic to a (possibly?) common use-case. Many classes include numeric properties; many of those properties should not fall below a minimum value. We can erroneously solve this problem using something like the following.
+
+{{
+    highlight_block(
+        'typescript/properties/antipattern/MinimumValue.ts',
+        blob_path = 'typescript/properties/antipattern/MinimumValue.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'MinimumValue.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/properties/antipattern/MinimumValue.ts'
+    )
+}}
+
+This factory defines `propertyKey` on `target` with the newly created property descriptor, using the scoped `value`.
+
+{{
+    highlight_block(
+        'typescript/properties/antipattern/HasDecoratedProperty.ts',
+        blob_path = 'typescript/properties/antipattern/HasDecoratedProperty.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'HasDecoratedProperty.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/properties/antipattern/HasDecoratedProperty.ts'
+    )
+}}
+
+This class simply applies the decorator to its `currentValue` property.
+
+{{
+    highlight_block(
+        'typescript/properties/antipattern/main.ts',
+        blob_path = 'typescript/properties/antipattern/main.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'main.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/properties/antipattern/main.ts'
+    )
+}}
+
+Attempting to use the decorator will present several issues. The first, demonstrated in the `for` loop, is that `value` recycles state even though we've created a new object. This is because the decorator is only run once, the first time the class is loaded (I think; if I'm wrong I'd love to know). The second, demonstrated with `demo1` and `demo2`, shows that `value` is actually a singleton. Changing it in one instance changes it everywhere.
+
+{{
+    shell_session("""
+$ ts-node --project tsconfig.json main.ts
+Current value: undefined
+Attempting to set demo.currentValue = -10
+Current value: 0
+---
+Current value: 0
+Attempting to set demo.currentValue = 10
+Current value: 10
+---
+Current value: 10
+Attempting to set demo.currentValue = 20
+Current value: 20
+---
+Setting demo1.currentValue = -10
+demo1.currentValue: 0
+Setting demo2.currentValue = 20
+demo1.currentValue: 20
+demo2.currentValue: 20
+""")
+}}
+
+### Solution
+
+A full solution involves other decorators and is therefore outside the scope of this post (I'll add a link to the full example when I finish it). The gist of the solution is to combine class and property decorators, similar to combining parameter and method decorators. The property decorator sets metadata that the class decorator consumes.
+
+## Recap
+
+Property decorators are great at adding extra information about properties at runtime. They can't do a whole more. Property decorators are often used in combination with other decorators to perform new actions at runtime.
+
+{% endblock %}
