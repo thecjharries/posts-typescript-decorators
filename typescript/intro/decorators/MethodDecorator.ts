@@ -1,6 +1,6 @@
 export function MethodDecorator(
     target: any,
-    propertyKey: any,
+    propertyKey: string | symbol,
     descriptor: PropertyDescriptor,
 ) {
     console.log(

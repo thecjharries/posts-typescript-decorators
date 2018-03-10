@@ -1,6 +1,6 @@
 function DecoratedParameter(
     target: any,
-    propertyKey: string,
+    propertyKey: string | symbol,
     parameterIndex: number,
 ) {
     // do nothing

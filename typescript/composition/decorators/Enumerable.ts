@@ -5,7 +5,7 @@ export function Enumerable(enumerable: boolean = true) {
     );
     return function decorator(
         target: any,
-        propertyKey: any,
+        propertyKey: string | symbol,
         descriptor: PropertyDescriptor,
     ) {
         console.log(

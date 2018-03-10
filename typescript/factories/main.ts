@@ -1,7 +1,7 @@
 import { Decorator } from "./decorators/Decorator";
 
 @Decorator("class")
-class SimpleClass {
+class Demo {
     @Decorator("property")
     public foo: string = "foo";
 
@@ -23,4 +23,4 @@ class SimpleClass {
     }
 }
 
-const demo = new SimpleClass();
+const demo = new Demo();

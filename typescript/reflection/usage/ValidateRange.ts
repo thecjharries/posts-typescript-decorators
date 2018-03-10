@@ -4,7 +4,7 @@ import { RANGE_KEY } from "./constants";
 
 export function ValidateRange(
     target: any,
-    propertyKey: string,
+    propertyKey: string | symbol,
     descriptor: PropertyDescriptor,
 ) {
     // Store the original value

@@ -3,7 +3,7 @@ import "reflect-metadata";
 import { REQUIRED_KEY } from "./constants";
 import { Required } from "./Required";
 
-class RequiredDemoClass {
+class Demo {
     public foo(
         @Required bar1: any,
         bar2: any,
@@ -16,17 +16,17 @@ class RequiredDemoClass {
 // Not defined on the class itself
 console.log(Reflect.getMetadata(
     REQUIRED_KEY,
-    RequiredDemoClass,
+    Demo,
     "foo",
 ));
 // undefined
 
 // Create an instance
-const requiredDemo = new RequiredDemoClass();
+const demo = new Demo();
 // Defined on instances of the class
 console.log(Reflect.getMetadata(
     REQUIRED_KEY,
-    requiredDemo,
+    demo,
     "foo",
 ));
 // [ 0, 2 ]

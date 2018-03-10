@@ -1,6 +1,6 @@
 import { Enumerable } from "./decorators/Enumerable";
 
-class SimpleClass {
+class Demo {
 
     @Enumerable(true)
     public isEnumerable() {
@@ -25,7 +25,7 @@ class SimpleClass {
     }
 }
 
-const demo = new SimpleClass();
+const demo = new Demo();
 
 // tslint:disable-next-line:forin
 for (const key in demo) {

@@ -56,7 +56,7 @@ To verify, we can create a simple class, decorate it, and see how TypeScript com
     )
 }}
 
-{{ shell_session('$ tsc -p tsconfig.json') }}
+{{ shell_session('$ tsc --project tsconfig.json') }}
 
 {{
     highlight_block(
@@ -128,7 +128,7 @@ To explore parameter decorators, let's build an uncomplicated logger.
     )
 }}
 
-{{ shell_session('$ tsc -p tsconfig.json') }}
+{{ shell_session('$ tsc --project tsconfig.json') }}
 
 {{
     highlight_block(
@@ -156,7 +156,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 
 `__param` is [only used by parameter decorators](https://github.com/Microsoft/TypeScript/blob/v2.7.2/src/compiler/transformers/ts.ts#L1609), unlike `__decorate`, which is used by all. Like `__decorate`, `__param`'s assignment is guarded. When created, `__param` becomes a factory that takes `target` and `propertyKey` as input with fixed `decorator` and `paramIndex`.
 
-Returning to [line 10](https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/parameter/main.js#L10), after the `__decorate` and `__param` declarations, we see a tidier `LogParameter` and `ParameterDemoClass`. All of the TS syntactic sugar has been removed for a faster, vanilla JS experience.
+Returning to [line 10](https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/parameter/main.js#L10), after the `__decorate` and `__param` declarations, we see a tidier `LogParameter` and `ParameterExample`. All of the TS syntactic sugar has been removed for a faster, vanilla JS experience.
 
 We're mainly interested in the `__decorate` call itself. [On line 21](https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/parameter/main.js#L21), the `decorators` array has been filled with `__param` calls. This converts the unique signature of parameter decorators into the standard `(target, propertyKey, descriptor)` format, albeit without a descriptor. Similarly, the decoration is happening on `logThis` (which owns the parameter) without a descriptor.
 
@@ -178,7 +178,7 @@ Once again, building a simple, logging decorator is a good way to explore.
     )
 }}
 
-{{ shell_session('$ tsc -p tsconfig.json') }}
+{{ shell_session('$ tsc --project tsconfig.json') }}
 
 {{
     highlight_block(
@@ -206,7 +206,7 @@ Logging decorators are very easy to write.
     )
 }}
 
-{{ shell_session('$ tsc -p tsconfig.json') }}
+{{ shell_session('$ tsc --project tsconfig.json') }}
 
 {{
     highlight_block(
@@ -236,7 +236,7 @@ There's not much to logging a class name.
     )
 }}
 
-{{ shell_session('$ tsc -p tsconfig.json') }}
+{{ shell_session('$ tsc --project tsconfig.json') }}
 
 {{
     highlight_block(

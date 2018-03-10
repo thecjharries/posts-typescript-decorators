@@ -10,7 +10,7 @@ import { Description } from "./Description";
 import { Name } from "./Name";
 import { ParameterMetadata } from "./ParameterMetadata";
 
-class ArbitraryMetadataDemoClass {
+class ArbitraryMetadata {
     public nameOnly(
         @Name("propertyWithNameOnly")
         propertyWithNameOnly: any,
@@ -47,30 +47,30 @@ class ArbitraryMetadataDemoClass {
 // These are not defined on the class
 // names
 console.log(
-    "ArbitraryMetadataDemoClass names:",
+    "ArbitraryMetadata names:",
     Reflect.getMetadata(
         PARAMETER_NAME_KEY,
-        ArbitraryMetadataDemoClass,
+        ArbitraryMetadata,
     ),
 );
 // descriptions
 console.log(
-    "ArbitraryMetadataDemoClass descriptions:",
+    "ArbitraryMetadata descriptions:",
     Reflect.getMetadata(
         PARAMETER_DESCRIPTION_KEY,
-        ArbitraryMetadataDemoClass,
+        ArbitraryMetadata,
     ),
 );
 // signature metadata
 console.log(
-    "metadata from ArbitraryMetadataDemoClass signatures:",
+    "metadata from ArbitraryMetadata signatures:",
     Reflect.getMetadata(
         PARAMETER_METADATA_KEY,
-        ArbitraryMetadataDemoClass,
+        ArbitraryMetadata,
     ),
 );
 // They're defined on an instance
-const arbitraryMetadataDemo = new ArbitraryMetadataDemoClass();
+const demoArbitraryMetadata = new ArbitraryMetadata();
 
 // This could be created via decorators
 // Since it requires more than parameter decorators, it's hardcoded
@@ -90,7 +90,7 @@ for (const method of METHODS) {
         `${method} names:`,
         Reflect.getMetadata(
             PARAMETER_NAME_KEY,
-            arbitraryMetadataDemo,
+            demoArbitraryMetadata,
             method,
         ),
     );
@@ -99,7 +99,7 @@ for (const method of METHODS) {
         `${method} descriptions:`,
         Reflect.getMetadata(
             PARAMETER_DESCRIPTION_KEY,
-            arbitraryMetadataDemo,
+            demoArbitraryMetadata,
             method,
         ),
     );
@@ -108,7 +108,7 @@ for (const method of METHODS) {
         `${method} signature metadata:`,
         Reflect.getMetadata(
             PARAMETER_METADATA_KEY,
-            arbitraryMetadataDemo,
+            demoArbitraryMetadata,
             method,
         ),
     );

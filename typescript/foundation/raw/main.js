@@ -8,12 +8,12 @@ function Enumerable(target, propertyKey, descriptor) {
     descriptor.enumerable = true;
     return descriptor;
 }
-class RawDemoClass {
+class Demo {
     foo() {
         // do nothing
     }
 }
 __decorate([
     Enumerable
-], RawDemoClass.prototype, "foo", null);
-const demo = new RawDemoClass();
+], Demo.prototype, "foo", null);
+const demo = new Demo();

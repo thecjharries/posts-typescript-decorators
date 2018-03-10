@@ -8,12 +8,12 @@ function LogProperty(target, propertyKey) {
     console.log(target);
     console.log(propertyKey);
 }
-class PropertyDemoClass {
+class PropertyExample {
     constructor() {
         this.greeting = "Hello, world";
     }
 }
 __decorate([
     LogProperty
-], PropertyDemoClass.prototype, "greeting", void 0);
-const propertyDemo = new PropertyDemoClass();
+], PropertyExample.prototype, "greeting", void 0);
+const demoExample = new PropertyExample();

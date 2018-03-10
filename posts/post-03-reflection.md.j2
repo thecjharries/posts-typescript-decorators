@@ -69,7 +69,7 @@ To investigate the experimental metadata, we'll need to create a decorator. A lo
     )
 }}
 
-{{ shell_session('$ tsc -p tsconfig.json') }}
+{{ shell_session('$ tsc --project tsconfig.json') }}
 
 {{
     highlight_block(
@@ -104,8 +104,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 At the bottom of the file in the `__decorate` call, you'll see the `__metadata` calls. Everything looks great. Except we're missing an important component.
 
 {{ shell_session("""
-$ ts-node -p 'Reflect && Reflect.metadata'
-undefined
+$ ts-node --print 'Reflect && Reflect.metadata || \"whoops\"'
+whoops
 """) }}
 
 ### `reflect-metadata`
@@ -178,11 +178,11 @@ This puts everything together in a simple class.
 
 {{
     highlight_block(
-        'typescript/reflection/usage/SampleClass.ts',
-        blob_path = 'typescript/reflection/usage/SampleClass.ts',
+        'typescript/reflection/usage/Sample.ts',
+        blob_path = 'typescript/reflection/usage/Sample.ts',
         explicit_lexer_name = 'TypeScriptLexer',
-        title = 'SampleClass.ts',
-        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/usage/SampleClass.ts',
+        title = 'Sample.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/reflection/usage/Sample.ts',
     )
 }}
 

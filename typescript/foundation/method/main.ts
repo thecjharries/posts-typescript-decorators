@@ -1,6 +1,6 @@
 function LogMethod(
     target: any,
-    propertyKey: string,
+    propertyKey: string | symbol,
     descriptor: PropertyDescriptor,
 ) {
     console.log(target);
@@ -8,10 +8,11 @@ function LogMethod(
     console.log(descriptor);
 }
 
-class MethodDemoClass {
+class MethodExample {
     @LogMethod
     public foo() {
         // do nothing
     }
 }
-const methodDemo = new MethodDemoClass();
+
+const demoMethod = new MethodExample();

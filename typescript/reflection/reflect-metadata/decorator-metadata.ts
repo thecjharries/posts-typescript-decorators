@@ -2,7 +2,7 @@ import "reflect-metadata";
 
 function LogMethod(
     target: any,
-    propertyKey: string,
+    propertyKey: string | symbol,
     descriptor: PropertyDescriptor,
 ) {
     // Checks the type of the decorated object
@@ -16,10 +16,10 @@ function LogMethod(
     // undefined
 }
 
-class MethodDemoClass {
+class Demo {
     @LogMethod
     public foo(bar: number) {
         // do nothing
     }
 }
-const methodDemo = new MethodDemoClass();
+const demo = new Demo();

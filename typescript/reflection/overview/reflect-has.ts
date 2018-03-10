@@ -1,18 +1,18 @@
 // The visibility compiles out but whatever
-class HasDemoClass {
+class Demo {
     public foo: number = 1;
     protected bar: number = 2;
     private baz: number = 3;
 }
 
 // Create an instance
-const hasDemo = new HasDemoClass();
+const demo = new Demo();
 
-console.log(Reflect.has(hasDemo, "foo"));
+console.log(Reflect.has(demo, "foo"));
 // true
-console.log(Reflect.has(hasDemo, "bar"));
+console.log(Reflect.has(demo, "bar"));
 // true
-console.log(Reflect.has(hasDemo, "baz"));
+console.log(Reflect.has(demo, "baz"));
 // true
-console.log(Reflect.has(hasDemo, "qqq"));
+console.log(Reflect.has(demo, "qqq"));
 // false
