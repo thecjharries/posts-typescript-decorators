@@ -4,5 +4,13 @@
 {% block content %}
 ## Overview
 
+Parameter decorators are the most restricted decorators, both in and out of strict mode. [The official docs](https://www.typescriptlang.org/docs/handbook/decorators.html#parameter-decorators) explicitly state
+
+> [a] parameter decorator can only be used to observe that a parameter has been declared on a method.
+
+Parameter decorators ignore any return, underlining their inability to affect the decorated parameters. [As we saw previously](https://blog.wizardsoftheweb.pro/typescript-decorators-reflection/#examplevalidateaparameterrange), parameter decorators can be used in tandem with other decorators to define extra information about the parameter. By themselves, their effectiveness is limited. [Logging parameter data](https://blog.wizardsoftheweb.pro/typescript-decorators-javascript-foundation/#parameterdecorators) seems to be the best use for a parameter decorator by itself.
+
+(If you've got a different or novel use for parameter decorators, I'd love to hear about it. Seriously. I'm really curious to see how other devs are using these. My email's in the footer.)
+
 ## Example
 {% endblock %}
