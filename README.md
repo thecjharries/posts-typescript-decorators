@@ -30,6 +30,7 @@ This is the code behind a series of posts about TypeScript decorators.
 
 * Expand CLI args where possible (e.g. replace `-P` with `--project`)
 * Update `propertyKey`'s type everywhere (i.e. `string | symbol` not `string`)
+* Create uniform example class names
 
 ## License
 
