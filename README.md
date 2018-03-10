@@ -29,6 +29,7 @@ This is the code behind a series of posts about TypeScript decorators.
 ## Other TODO
 
 * Expand CLI args where possible (e.g. replace `-P` with `--project`)
+* Update `propertyKey`'s type everywhere (i.e. `string | symbol` not `string`)
 
 ## License
 
