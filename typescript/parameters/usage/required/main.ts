@@ -8,7 +8,9 @@ class RequiredDemoClass {
         @Required bar1: any,
         bar2: any,
         @Required bar3: any,
-    ) { }
+    ) {
+        // do nothing
+    }
 }
 
 // Not defined on the class itself

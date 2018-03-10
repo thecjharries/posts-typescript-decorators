@@ -14,12 +14,16 @@ class ArbitraryMetadataDemoClass {
     public nameOnly(
         @Name("propertyWithNameOnly")
         propertyWithNameOnly: any,
-    ) { }
+    ) {
+        // do nothing
+    }
 
     public descriptionOnly(
         @Description("decorated with Description")
         propertyWithDescriptionOnly: any,
-    ) { }
+    ) {
+        // do nothing
+    }
 
     public usingParameterMetadata(
         @ParameterMetadata(
@@ -27,13 +31,17 @@ class ArbitraryMetadataDemoClass {
             "decorated with ParameterMetadata",
         )
         decoratedWithParameterMetadata: any,
-    ) { }
+    ) {
+        // do nothing
+    }
 
     public chainingDecorators(
         @Name("decoratedViaChain")
         @Description("decorated with Name and Description")
         decoratedViaChain: any,
-    ) { }
+    ) {
+        // do nothing
+    }
 }
 
 // These are not defined on the class
@@ -43,7 +51,7 @@ console.log(
     Reflect.getMetadata(
         PARAMETER_NAME_KEY,
         ArbitraryMetadataDemoClass,
-        ),
+    ),
 );
 // descriptions
 console.log(

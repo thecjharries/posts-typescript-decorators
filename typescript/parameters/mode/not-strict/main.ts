@@ -14,7 +14,9 @@ class NotStrictModeClass {
     constructor() {
         console.log(this.stringProperty);
     }
-    public foo(@DecoratedParameter bar: any) { }
+    public foo(@DecoratedParameter bar: any) {
+        // do nothing
+    }
 }
 
 const notStrictModeDemo = new NotStrictModeClass();
