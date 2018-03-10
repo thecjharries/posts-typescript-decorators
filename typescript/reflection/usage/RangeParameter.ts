@@ -6,11 +6,11 @@ export function RangeParameter(
     min: number = 0,
     max: number = 100,
 ) {
-    return function(
+    return (
         target: any,
         propertyKey: string | symbol,
         parameterIndex: number,
-    ) {
+    ) => {
         // Pull existing metadata (if any)
         const existingRanges: { [key: number]: number[] } = (
             Reflect.getMetadata(RANGE_KEY, target, propertyKey)

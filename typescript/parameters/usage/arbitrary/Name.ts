@@ -31,11 +31,11 @@ export function updateParameterNames(
 }
 
 export function Name(name: string) {
-    return function(
+    return (
         target: any,
         propertyKey: string | symbol,
         parameterIndex: number,
-    ) {
+    ) => {
         // Update the parameter name metadata
         updateParameterNames(
             target,

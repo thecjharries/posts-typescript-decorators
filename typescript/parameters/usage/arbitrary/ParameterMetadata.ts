@@ -7,11 +7,11 @@ import { updateParameterDescriptions } from "./Description";
 import { updateParameterNames } from "./Name";
 
 export function ParameterMetadata(name: string, description: string) {
-    return function(
+    return (
         target: any,
         propertyKey: string | symbol,
         parameterIndex: number,
-    ) {
+    ) => {
         // Update the parameter name metadata
         updateParameterNames(
             target,
