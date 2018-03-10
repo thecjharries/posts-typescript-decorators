@@ -10,7 +10,7 @@ export function ValidateRange(
     // Store the original value
     const savedValue = descriptor.value;
     // Attach validation logic
-    descriptor.value = function(...args: any[]) {
+    descriptor.value = (...args: any[]) => {
         // Pull the active ranges (if any)
         const monitoredRanges: { [key: number]: number[] } = (
             Reflect.getOwnMetadata(
