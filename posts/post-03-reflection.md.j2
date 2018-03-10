@@ -104,8 +104,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 At the bottom of the file in the `__decorate` call, you'll see the `__metadata` calls. Everything looks great. Except we're missing an important component.
 
 {{ shell_session("""
-$ ts-node -p 'Reflect && Reflect.metadata'
-undefined
+$ ts-node --print 'Reflect && Reflect.metadata || \"whoops\"'
+whoops
 """) }}
 
 ### `reflect-metadata`
