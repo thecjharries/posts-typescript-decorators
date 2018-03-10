@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "target": "ESNext",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "strict": false
-  },
-  "include": ["./**/*.ts"]
-}
