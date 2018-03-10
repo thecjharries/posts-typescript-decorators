@@ -46,7 +46,7 @@ This example is used to explain the signature.
 
 ## Usage
 
-### Attach Metadata
+As property decorators do not affect the underlying object, their primary use is to create and attach metadata. Consuming said metadata involves other decorators, so it's skipped here. The example below illustrates an easy way to attach metadata to properties.
 
 {{
     highlight_block(
@@ -105,6 +105,77 @@ Instance property metadata: { foo: { name: 'foo' },
   baz: { name: 'baz', description: 'property baz' } }
 """)
 }}
+
+## Antipattern
+
+Property decorators cannot modify the owning object as their return is ignored. Ergo any changes made on `target` are actually made globally. You might have seen [this common property decorator example](https://gist.github.com/remojansen/16c661a7afd68e22ac6e#file-property_decorator-ts); it defines a property on `target` using the decorator's scope to maintain state (note that example will not work in strict mode). However, for a single class, the decorator is only called once. This means any instance of the class reuses the same decorator scope, essentially changing an instance property into a static property that can be updated.
+
+### Example
+
+This will make more sense with an example. Rather than rehash the copypasta that [pops up everywhere](https://stackoverflow.com/q/45830878/2877698), I applied the logic to a (possibly?) common use-case. Many classes include numeric properties; many of those properties should not fall below a minimum value. We can erroneously solve this problem using something like the following.
+
+{{
+    highlight_block(
+        'typescript/properties/antipattern/MinimumValue.ts',
+        blob_path = 'typescript/properties/antipattern/MinimumValue.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'MinimumValue.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/properties/antipattern/MinimumValue.ts'
+    )
+}}
+
+This factory defines `propertyKey` on `target` with the newly created property descriptor, using the scoped `value`.
+
+{{
+    highlight_block(
+        'typescript/properties/antipattern/HasDecoratedProperty.ts',
+        blob_path = 'typescript/properties/antipattern/HasDecoratedProperty.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'HasDecoratedProperty.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/properties/antipattern/HasDecoratedProperty.ts'
+    )
+}}
+
+This class simply applies the decorator to its `currentValue` property.
+
+{{
+    highlight_block(
+        'typescript/properties/antipattern/main.ts',
+        blob_path = 'typescript/properties/antipattern/main.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'main.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/properties/antipattern/main.ts'
+    )
+}}
+
+Attempting to use the decorator will present several issues. The first, demonstrated in the `for` loop, is that `value` recycles state even though we've created a new object. This is because the decorator is only run once, the first time the class is loaded (I think; if I'm wrong I'd love to know). The second, demonstrated with `demo1` and `demo2`, shows that `value` is actually a singleton. Changing it in one instance changes it everywhere.
+
+{{
+    shell_session("""
+$ ts-node --project tsconfig.json main.ts
+Current value: undefined
+Attempting to set demo.currentValue = -10
+Current value: 0
+---
+Current value: 0
+Attempting to set demo.currentValue = 10
+Current value: 10
+---
+Current value: 10
+Attempting to set demo.currentValue = 20
+Current value: 20
+---
+Setting demo1.currentValue = -10
+demo1.currentValue: 0
+Setting demo2.currentValue = 20
+demo1.currentValue: 20
+demo2.currentValue: 20
+""")
+}}
+
+### Solution
+
+A full solution involves other decorators and is therefore outside the scope of this post (I'll add a link to the full example when I finish it). The gist of the solution is to combine class and property decorators, similar to combining parameter and method decorators. The property decorator sets metadata that the class decorator consumes.
 
 ## Recap
 
