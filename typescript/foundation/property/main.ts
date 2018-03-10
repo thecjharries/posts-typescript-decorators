@@ -14,4 +14,5 @@ class PropertyExample {
         this.greeting = "Hello, world";
     }
 }
+
 const demoExample = new PropertyExample();

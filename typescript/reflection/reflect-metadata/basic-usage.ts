@@ -1,6 +1,6 @@
 import "reflect-metadata";
 
-class BasicUsageDemoClass {
+class BasicUsage {
     constructor() {
         // Explicitly define some metadata
         // key, value, target, propertyKey
@@ -15,7 +15,7 @@ class BasicUsageDemoClass {
     }
 }
 
-const basicUsageDemo = new BasicUsageDemoClass();
+const demoBasicUsage = new BasicUsage();
 
 // key, target, propertyKey
 console.log(Reflect.getMetadata("foo1", basicUsageDemo, "baz"));

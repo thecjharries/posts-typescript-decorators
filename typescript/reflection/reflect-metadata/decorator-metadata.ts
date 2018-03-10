@@ -16,10 +16,10 @@ function LogMethod(
     // undefined
 }
 
-class MethodDemoClass {
+class Demo {
     @LogMethod
     public foo(bar: number) {
         // do nothing
     }
 }
-const methodDemo = new MethodDemoClass();
+const demo = new Demo();

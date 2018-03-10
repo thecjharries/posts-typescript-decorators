@@ -4,7 +4,7 @@ import { ParameterDecorator } from "./decorators/ParameterDecorator";
 import { PropertyDecorator } from "./decorators/PropertyDecorator";
 
 @ClassDecorator
-class SimpleClass {
+class Demo {
     @PropertyDecorator
     public foo: string = "foo";
 
@@ -26,4 +26,4 @@ class SimpleClass {
     }
 }
 
-const demo = new SimpleClass();
+const demo = new Demo();

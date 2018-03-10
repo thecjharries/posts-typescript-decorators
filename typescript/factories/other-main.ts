@@ -1,6 +1,6 @@
 import { MaskMethod } from "./decorators/MaskMethod";
 
-class MaskableMethodsClass {
+class MaskableMethods {
     @MaskMethod(true)
     public foo() {
         console.log("foo");
@@ -12,7 +12,7 @@ class MaskableMethodsClass {
     }
 }
 
-const demo = new MaskableMethodsClass();
+const demoMaskableMethods = new MaskableMethods();
 
 for (const key of ["foo", "bar"]) {
     console.log(key, demo[key]);

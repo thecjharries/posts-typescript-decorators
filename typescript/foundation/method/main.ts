@@ -14,4 +14,5 @@ class MethodExample {
         // do nothing
     }
 }
+
 const demoMethod = new MethodExample();

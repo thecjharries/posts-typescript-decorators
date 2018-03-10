@@ -1,7 +1,7 @@
 import { RangeParameter } from "./RangeParameter";
 import { ValidateRange } from "./ValidateRange";
 
-export class SampleClass {
+export class Sample {
     // Validate the input ranges
     @ValidateRange
     public updatePercentage(
