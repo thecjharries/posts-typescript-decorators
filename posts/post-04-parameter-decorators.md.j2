@@ -1,11 +1,11 @@
 {% extends 'base.md.j2' %}
 {% block lead %}
-This post takes an in-depth look at parameter decorators. It examines their signature, compares usage in and out of strict mode, and provides a couple of useful examples. Reading the previous posts in the series is encouraged but not necessary.
+This post takes an in-depth look at parameter decorators. It examines their signature and provides a couple of useful examples. Reading the previous posts in the series is encouraged but not necessary.
 {% endblock %}
 {% block content %}
 ## Overview
 
-Parameter decorators are the most restricted decorators, both in and out of strict mode. [The official docs](https://www.typescriptlang.org/docs/handbook/decorators.html#parameter-decorators) explicitly state
+Parameter decorators are the most restricted decorators. [The official docs](https://www.typescriptlang.org/docs/handbook/decorators.html#parameter-decorators) state
 
 > [a] parameter decorator can only be used to observe that a parameter has been declared on a method.
 
@@ -75,76 +75,6 @@ This example is used to explain the signature.
 ### `parameterIndex: number`
 
 `parameterIndex` is the index of the decorated parameter in the signature of the calling method. `parameterIndex` in the example is `1`.
-
-## Changing Mode
-
-I haven't noticed any difference between parameter decorators in strict mode and those not in strict mode. The passed-in context doesn't seem to be the owning object, and, again, as the return is ignored, I'm not sure there's even a convoluted way to access the parameters themselves. Both are able to modify `target`, as always. The examples below just illustrate the differences between `this`; I also don't see a use for one over the other (aside from the flexibility differences in and out of strict mode, which is a different topic).
-
-### Strict Mode
-
-{{
-    highlight_block(
-        'typescript/parameters/mode/strict/tsconfig.json',
-        blob_path = 'typescript/parameters/mode/strict/tsconfig.json',
-        explicit_lexer_name = 'JsonLexer',
-        title = 'strict/tsconfig.json',
-        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/parameters/mode/strict/tsconfig.json'
-    )
-}}
-
-{{
-    highlight_block(
-        'typescript/parameters/mode/strict/main.ts',
-        blob_path = 'typescript/parameters/mode/strict/main.ts',
-        explicit_lexer_name = 'TypeScriptLexer',
-        title = 'strict/main.ts',
-        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/parameters/mode/strict/main.ts'
-    )
-}}
-
-{{
-    shell_session("""
-$ ts-node --project strict/tsconfig.json strict/main.ts
-TypeError: Cannot read property 'constructor' of undefined
-changed in decorator
-""")
-}}
-
-As expected, nothing happens. A function's `this` is not defined [in strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode#Securing_JavaScript).
-
-### Not Strict Mode
-
-{{
-    highlight_block(
-        'typescript/parameters/mode/not-strict/tsconfig.json',
-        blob_path = 'typescript/parameters/mode/not-strict/tsconfig.json',
-        explicit_lexer_name = 'JsonLexer',
-        title = 'not-strict/tsconfig.json',
-        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/parameters/mode/not-strict/tsconfig.json'
-    )
-}}
-
-{{
-    highlight_block(
-        'typescript/parameters/mode/not-strict/main.ts',
-        blob_path = 'typescript/parameters/mode/not-strict/main.ts',
-        explicit_lexer_name = 'TypeScriptLexer',
-        title = 'not-strict/main.ts',
-        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/parameters/mode/not-strict/main.ts'
-    )
-}}
-
-{{
-    shell_session("""
-$ ts-node --project not-strict/tsconfig.json not-strict/main.ts
-this.constructor.name: Object
-target.constructor.name: NotStrictModeClass
-this !== target
-changed in decorator
-""")
-}}
-
-Because the context (`this`) isn't the owning object (`target`), we don't gain a tremendous amount here by eschewing strict mode.
 
 ## Usage
 
@@ -308,5 +238,5 @@ chainingDecorators signature metadata: [ { description: 'decorated with Name and
 
 ## Recap
 
-Parameter decorators are great at adding extra information about parameters at runtime. They can't do a whole lot more. There's not a discernable difference between strict mode parameter decorators and not strict mode parameter decorators. Parameter decorators are often used in combination with other decorators to perform new actions at runtime.
+Parameter decorators are great at adding extra information about parameters at runtime. They can't do a whole lot more. Parameter decorators are often used in combination with other decorators to perform new actions at runtime.
 {% endblock %}
