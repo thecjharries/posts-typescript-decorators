@@ -268,7 +268,7 @@ The `Description` decorator is almost identical to `Name`. It, rather unsurprisi
     )
 }}
 
-The `ParameterMetadata` decorator updates both name and description. As I mentioned earlier, it would be fairly straightforward to update its signature to request an `IParameterMetadata` object (instead of `[string, string]`), but I didn't think of that until I started annotating the example so I didn't do that.
+The `ParameterMetadata` decorator updates both names and descriptions as well as signature metadata. As I mentioned earlier, it would be fairly straightforward to update its signature to request an `IParameterMetadata` object (instead of `[string, string]`), but I didn't think of that until I started annotating the example so I didn't do that.
 
 {{
     highlight_block(
@@ -299,13 +299,11 @@ descriptionOnly signature metadata: [ { description: 'decorated with Description
 ---
 usingParameterMetadata names: [ 'decoratedWithParameterMetadata' ]
 usingParameterMetadata descriptions: [ 'decorated with ParameterMetadata' ]
-usingParameterMetadata signature metadata: [ { description: 'decorated with ParameterMetadata',
-    name: 'decoratedWithParameterMetadata' } ]
+usingParameterMetadata signature metadata: [ { description: 'decorated with ParameterMetadata', name: 'decoratedWithParameterMetadata' } ]
 ---
 chainingDecorators names: [ 'decoratedViaChain' ]
 chainingDecorators descriptions: [ 'decorated with Name and Description' ]
-chainingDecorators signature metadata: [ { description: 'decorated with Name and Description',
-    name: 'decoratedViaChain' } ]
+chainingDecorators signature metadata: [ { description: 'decorated with Name and Description', name: 'decoratedViaChain' } ]
 """)
 }}
 {% endblock %}
