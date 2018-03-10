@@ -6,6 +6,7 @@ WIP.
 
 - [Finished](#finished)
 - [Want to Do](#wanttodo)
+- [Other TODO](#othertodo)
 - [License](#license)
 
 <!-- /MarkdownTOC -->
@@ -24,6 +25,10 @@ This is the code behind a series of posts about TypeScript decorators.
 * Method Decorators
 * Class Decorators
 * Where Decorators Work
+
+## Other TODO
+
+* Expand CLI args where possible (e.g. replace `-P` with `--project`)
 
 ## License
 
