@@ -4,12 +4,12 @@ import { RANGE_KEY } from "./constants";
 
 export function RangeParameter(
     min: number = 0,
-    max: number = 100
+    max: number = 100,
 ) {
     return function(
         target: any,
         propertyKey: string | symbol,
-        parameterIndex: number
+        parameterIndex: number,
     ) {
         // Pull existing metadata (if any)
         let existingRanges: { [key: number]: number[] } = (

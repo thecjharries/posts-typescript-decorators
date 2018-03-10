@@ -5,14 +5,14 @@ import { REQUIRED_KEY } from "./constants";
 export function Required(
     target: any,
     propertyKey: string | symbol,
-    parameterIndex: number
+    parameterIndex: number,
 ) {
     // Pull existing parameters for this method or create an empty array
     const requiredParameters = (
         Reflect.getOwnMetadata(
             REQUIRED_KEY,
             target,
-            propertyKey
+            propertyKey,
         )
         ||
         []
@@ -26,6 +26,6 @@ export function Required(
         REQUIRED_KEY,
         requiredParameters,
         target,
-        propertyKey
+        propertyKey,
     );
 }

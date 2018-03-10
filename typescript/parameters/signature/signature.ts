@@ -1,5 +1,5 @@
 type ParameterDecoratorType = (
     target: any,
     propertyKey: string | symbol,
-    parameterIndex: number
+    parameterIndex: number,
 ) => void;

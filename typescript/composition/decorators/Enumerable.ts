@@ -6,7 +6,7 @@ export function Enumerable(enumerable: boolean = true) {
     return function decorator(
         target: any,
         propertyKey: any,
-        descriptor: PropertyDescriptor
+        descriptor: PropertyDescriptor,
     ) {
         console.log(
             `Making ${propertyKey}` +

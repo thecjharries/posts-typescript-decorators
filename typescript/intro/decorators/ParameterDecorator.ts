@@ -1,7 +1,7 @@
 export function ParameterDecorator(
     target: Object,
     propertyKey: string,
-    parameterIndex: number
+    parameterIndex: number,
 ) {
     console.log(
         `Decorating parameter ${propertyKey}` +

@@ -83,7 +83,7 @@ for (const method of METHODS) {
         Reflect.getMetadata(
             PARAMETER_NAME_KEY,
             arbitraryMetadataDemo,
-            method
+            method,
         )
     );
     // Log the parameter descriptions
@@ -92,7 +92,7 @@ for (const method of METHODS) {
         Reflect.getMetadata(
             PARAMETER_DESCRIPTION_KEY,
             arbitraryMetadataDemo,
-            method
+            method,
         )
     );
     // Log the full signature metadata
@@ -101,7 +101,7 @@ for (const method of METHODS) {
         Reflect.getMetadata(
             PARAMETER_METADATA_KEY,
             arbitraryMetadataDemo,
-            method
+            method,
         )
     );
 }

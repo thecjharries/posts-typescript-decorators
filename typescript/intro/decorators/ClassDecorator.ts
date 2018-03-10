@@ -1,5 +1,5 @@
 export function ClassDecorator(
-    constructor: Function
+    constructor: Function,
 ) {
     console.log(`Decorating ${constructor.name}`);
 }

@@ -1,7 +1,7 @@
 function Enumerable(
     target: any,
     propertyKey: string,
-    descriptor: PropertyDescriptor
+    descriptor: PropertyDescriptor,
 ) {
     descriptor.enumerable = true;
     return descriptor;

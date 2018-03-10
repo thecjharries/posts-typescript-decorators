@@ -1,7 +1,7 @@
 export function MethodDecorator(
     target: any,
     propertyKey: any,
-    descriptor: PropertyDescriptor
+    descriptor: PropertyDescriptor,
 ) {
     console.log(
         `Decorating method ${propertyKey}` +

@@ -1,7 +1,7 @@
 function DecoratedParameter(
     target: any,
     propertyKey: string,
-    parameterIndex: number
+    parameterIndex: number,
 ) {
     console.log("this.constructor.name:", this.constructor.name);
     console.log("target.constructor.name:", target.constructor.name);
