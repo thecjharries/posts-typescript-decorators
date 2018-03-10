@@ -27,10 +27,10 @@ export function ValidateRange(
             const value = args[key];
             // Throw error if outside range
             if (value < range[0] || value > range[1]) {
-                throw new Error('Value outside of range')
+                throw new Error('Value outside of range');
             }
         }
         // Actually call the function
         return Reflect.apply(savedValue, target, args);
-    }
+    };
 }
