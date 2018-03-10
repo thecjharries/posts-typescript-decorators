@@ -147,5 +147,165 @@ changed in decorator
 
 Because the context (`this`) isn't the owning object (`target`), we don't gain a tremendous amount here by eschewing strict mode.
 
-## Example
+## Usage
+
+I spent last week trying to figure out an interesting or useful parameter decorator that functions in a vacuum, i.e. one not used with other decorators (well, not the whole week, just when I wanted to work on a really difficult problem that doesn't seem to have a good solution). I still have nothing. Parameter decorators are triggered when the parameter is declared, but they don't affect anything. We can't observe the parameter's value, because that's attached long after the parameter is decorated. We can't change the state, because that's also not created until long after the parameter is decorated. Long story short, we can define metadata and that's about it.
+
+If you haven't read [the reflection post](https://blog.wizardsoftheweb.pro/typescript-decorators-reflection/), give it a quick skim. We'll either have to build our own metadata interface in vanilla TypeScript or use [the `reflect-metadata` package](https://www.npmjs.com/package/reflect-metadata). One requires a bunch of extra work totally unrelated to the code we're writing and the other is a simple import.
+
+Once again (I'm getting tired of reiterating this), parameter decorators are observers. We can define metadata, but we're not really able to consume any. Parameter decorators are executed [before anything else](https://www.typescriptlang.org/docs/handbook/decorators.html#decorator-evaluation), so I suppose you could consume other parameter metadata but that's just silly (I'd wager that execution order isn't well-defined across platforms, modules, and standards).
+
+### `required`
+
+[The official docs](https://www.typescriptlang.org/docs/handbook/decorators.html#parameter-decorators) give a very useful example. One of the features TypeScript adds is required arguments, e.g. if I define `function foo(bar: string)`, I can't compile `foo()`. However, the underlying JavaScript doesn't respect those restrictions. Anything downstream that uses the JavaScript instead of the TypeScript could easily sidestep those restriction (accidentally or not), and there are plenty of ways around them in TypeScript itself.
+
+Using decorators, we can at least note that parameter is required or not. Whether or not something is done with that metadata is outside the scope of parameter decorators, so I'm skipping that here. This is one way to tag them. It's loosely based on [the official docs](https://www.typescriptlang.org/docs/handbook/decorators.html#parameter-decorators) but approaches things differently enough that I'm comfortable calling this my own. Honestly there are only so many way to create an array, add values, and pass it on.
+
+{{
+    highlight_block(
+        'typescript/parameters/usage/required/constants.ts',
+        blob_path = 'typescript/parameters/usage/required/constants.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'required/constants.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/parameters/usage/required/constants.ts'
+    )
+}}
+
+By `export`ing the `Symbol` we can use it anywhere we `import` it (and ensure it's the same everywhere).
+
+{{
+    highlight_block(
+        'typescript/parameters/usage/required/Required.ts',
+        blob_path = 'typescript/parameters/usage/required/Required.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'required/Required.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/parameters/usage/required/Required.ts'
+    )
+}}
+
+You don't actually have to `sort` the array, but the order might not be what you expect (it was reversed the one time I ran it). If you're consuming it via [a `for...of` loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of), you really don't have to `sort` it.
+
+{{
+    highlight_block(
+        'typescript/parameters/usage/required/main.ts',
+        blob_path = 'typescript/parameters/usage/required/main.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'required/main.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/parameters/usage/required/main.ts'
+    )
+}}
+
+{{
+    shell_session("""
+$ ts-node required/main.ts
+undefined
+[ 0, 2 ]
+""")
+}}
+
+
+### Arbitrary Metadata
+
+I've already written [an example adding some validation metadata](https://blog.wizardsoftheweb.pro/typescript-decorators-reflection/#examplevalidateaparameterrange). The official docs cover [pulling existing metadata](https://www.typescriptlang.org/docs/handbook/decorators.html#metadata). You can basically add anything you'd like.
+
+The example below illustrates two different approaches to add specific parameter metadata. You can either create a decorator that takes everything (`ParameterMetadata`) or chain individual decorators (`Name`, `Description`) to attach only the desired information (of course you could tweak `ParameterMetadata`'s signature to request an object and pull `name` and `description` out of that instead).
+
+{{
+    highlight_block(
+        'typescript/parameters/usage/arbitrary/constants.ts',
+        blob_path = 'typescript/parameters/usage/arbitrary/constants.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'arbitrary/constants.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/parameters/usage/arbitrary/constants.ts'
+    )
+}}
+
+First we define the metadata keys and `export` them for anything to `import`.
+
+{{
+    highlight_block(
+        'typescript/parameters/usage/arbitrary/interfaces.ts',
+        blob_path = 'typescript/parameters/usage/arbitrary/interfaces.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'arbitrary/interfaces.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/parameters/usage/arbitrary/interfaces.ts'
+    )
+}}
+
+This defines `IParameterMetadata` and aliases an array of `IParameterMetadata` as `SignatureMetadataType` to streamline manipulation. It's usually better to have types to rely on.
+
+{{
+    highlight_block(
+        'typescript/parameters/usage/arbitrary/Name.ts',
+        blob_path = 'typescript/parameters/usage/arbitrary/Name.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'arbitrary/Name.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/parameters/usage/arbitrary/Name.ts'
+    )
+}}
+
+The `Name` decorator updates the list of parameter names and also updates the list of signature metadata, since I decided to make things complicated.
+
+{{
+    highlight_block(
+        'typescript/parameters/usage/arbitrary/Description.ts',
+        blob_path = 'typescript/parameters/usage/arbitrary/Description.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'arbitrary/Description.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/parameters/usage/arbitrary/Description.ts'
+    )
+}}
+
+The `Description` decorator is almost identical to `Name`. It, rather unsurprisingly, updates descriptions instead of names.
+
+{{
+    highlight_block(
+        'typescript/parameters/usage/arbitrary/ParameterMetadata.ts',
+        blob_path = 'typescript/parameters/usage/arbitrary/ParameterMetadata.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'arbitrary/ParameterMetadata.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/parameters/usage/arbitrary/ParameterMetadata.ts'
+    )
+}}
+
+The `ParameterMetadata` decorator updates both name and description. As I mentioned earlier, it would be fairly straightforward to update its signature to request an `IParameterMetadata` object (instead of `[string, string]`), but I didn't think of that until I started annotating the example so I didn't do that.
+
+{{
+    highlight_block(
+        'typescript/parameters/usage/arbitrary/main.ts',
+        blob_path = 'typescript/parameters/usage/arbitrary/main.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'arbitrary/main.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/parameters/usage/arbitrary/main.ts'
+    )
+}}
+
+Putting everything together, we can use any of the decorators we'd like. We could chain any combination we'd like, but it's important to remember [how decorator chaining works](https://blog.wizardsoftheweb.pro/typescript-decorators-introduction/#composition); essentially the outermost (first, top, whatever) decorator will overwrite anything set by inner decorators.
+
+{{
+    shell_session("""
+$ ts-node arbitrary/main.ts
+ArbitraryMetadataDemoClass names: undefined
+ArbitraryMetadataDemoClass descriptions: undefined
+metadata from ArbitraryMetadataDemoClass signatures: undefined
+---
+nameOnly names: [ 'propertyWithNameOnly' ]
+nameOnly descriptions: undefined
+nameOnly signature metadata: [ { description: '', name: 'propertyWithNameOnly' } ]
+---
+descriptionOnly names: undefined
+descriptionOnly descriptions: [ 'decorated with Description' ]
+descriptionOnly signature metadata: [ { description: 'decorated with Description', name: '' } ]
+---
+usingParameterMetadata names: [ 'decoratedWithParameterMetadata' ]
+usingParameterMetadata descriptions: [ 'decorated with ParameterMetadata' ]
+usingParameterMetadata signature metadata: [ { description: 'decorated with ParameterMetadata',
+    name: 'decoratedWithParameterMetadata' } ]
+---
+chainingDecorators names: [ 'decoratedViaChain' ]
+chainingDecorators descriptions: [ 'decorated with Name and Description' ]
+chainingDecorators signature metadata: [ { description: 'decorated with Name and Description',
+    name: 'decoratedViaChain' } ]
+""")
+}}
 {% endblock %}
