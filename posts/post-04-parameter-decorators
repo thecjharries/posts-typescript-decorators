@@ -1,0 +1,5 @@
+{% extends 'base.md.j2' %}
+{% block lead %}
+{% endblock %}
+{% block content %}
+{% endblock %}
