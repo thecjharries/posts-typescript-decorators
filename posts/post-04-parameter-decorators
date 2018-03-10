@@ -12,5 +12,42 @@ Parameter decorators ignore any return, underlining their inability to affect th
 
 (If you've got a different or novel use for parameter decorators, I'd love to hear about it. Seriously. I'm really curious to see how other devs are using these. My email's in the footer.)
 
+## Signature
+
+{{
+    highlight_block(
+        'typescript/parameters/signature/signature.ts',
+        blob_path = 'typescript/parameters/signature/signature.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'signature.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/parameters/signature/signature.ts'
+    )
+}}
+
+
+This example is used to explain the signature.
+
+{{
+    highlight_block(
+        'typescript/parameters/signature/signature-example.ts',
+        blob_path = 'typescript/parameters/signature/signature-example.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'signature-example.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/parameters/signature/signature-example.ts'
+    )
+}}
+
+### `target: any`
+
+`target` is the object (not method) that owns the method whose parameter has been decorated. `target` in the example is `TargetDemo`, not `foo`.
+
+### `propertyKey: string | symbol`
+
+`propertyKey` is the method name (not object name) whose signature has been decorated. It could also be [a `Symbol`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol), depending on how the method is defined on the object. `propertyKey` in the example is `foo`, not `TargetDemo`.
+
+### `parameterIndex: number`
+
+`parameterIndex` is the index of the decorated parameter in the signaure of the calling method. `parameterIndex` in the example is `1`.
+
 ## Example
 {% endblock %}
