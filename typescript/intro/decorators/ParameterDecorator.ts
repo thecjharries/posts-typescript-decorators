@@ -1,11 +1,11 @@
 export function ParameterDecorator(
-    target: Object,
+    target: any,
     propertyKey: string,
-    parameterIndex: number
+    parameterIndex: number,
 ) {
     console.log(
         `Decorating parameter ${propertyKey}` +
         ` (index ${parameterIndex})` +
-        ` from ${target.constructor.name}`
+        ` from ${target.constructor.name}`,
     );
 }

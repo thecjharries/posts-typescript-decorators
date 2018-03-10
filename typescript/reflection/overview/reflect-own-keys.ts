@@ -10,6 +10,7 @@ RootObject.prototype = { foo: "bar" } as any;
 const root = new RootObject();
 
 // for...in moves up the prototype chain
+// tslint:disable-next-line:forin
 for (const key in root) {
     console.log(key);
 }

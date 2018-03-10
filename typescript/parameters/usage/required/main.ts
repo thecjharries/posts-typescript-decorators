@@ -8,14 +8,16 @@ class RequiredDemoClass {
         @Required bar1: any,
         bar2: any,
         @Required bar3: any,
-    ) { }
+    ) {
+        // do nothing
+    }
 }
 
 // Not defined on the class itself
 console.log(Reflect.getMetadata(
     REQUIRED_KEY,
     RequiredDemoClass,
-    "foo"
+    "foo",
 ));
 // undefined
 
@@ -25,6 +27,6 @@ const requiredDemo = new RequiredDemoClass();
 console.log(Reflect.getMetadata(
     REQUIRED_KEY,
     requiredDemo,
-    "foo"
+    "foo",
 ));
 // [ 0, 2 ]

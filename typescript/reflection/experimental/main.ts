@@ -1,7 +1,7 @@
 function LogMethod(
     target: any,
     propertyKey: string,
-    descriptor: PropertyDescriptor
+    descriptor: PropertyDescriptor,
 ) {
     console.log(target);
     console.log(propertyKey);

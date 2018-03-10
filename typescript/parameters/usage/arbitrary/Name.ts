@@ -7,14 +7,14 @@ export function updateParameterNames(
     target: any,
     propertyKey: string | symbol,
     parameterIndex: number,
-    name: string
+    name: string,
 ) {
     // Pull the array of parameter names
     const parameterNames = (
         Reflect.getOwnMetadata(
             PARAMETER_NAME_KEY,
             target,
-            propertyKey
+            propertyKey,
         )
         ||
         []
@@ -26,16 +26,16 @@ export function updateParameterNames(
         PARAMETER_NAME_KEY,
         parameterNames,
         target,
-        propertyKey
+        propertyKey,
     );
 }
 
 export function Name(name: string) {
-    return function(
+    return (
         target: any,
         propertyKey: string | symbol,
-        parameterIndex: number
-    ) {
+        parameterIndex: number,
+    ) => {
         // Update the parameter name metadata
         updateParameterNames(
             target,
@@ -48,7 +48,7 @@ export function Name(name: string) {
             Reflect.getOwnMetadata(
                 PARAMETER_METADATA_KEY,
                 target,
-                propertyKey
+                propertyKey,
             )
             ||
             []
@@ -73,7 +73,7 @@ export function Name(name: string) {
             PARAMETER_METADATA_KEY,
             parameterMetadata,
             target,
-            propertyKey
+            propertyKey,
         );
-    }
+    };
 }

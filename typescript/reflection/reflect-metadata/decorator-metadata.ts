@@ -3,7 +3,7 @@ import "reflect-metadata";
 function LogMethod(
     target: any,
     propertyKey: string,
-    descriptor: PropertyDescriptor
+    descriptor: PropertyDescriptor,
 ) {
     // Checks the type of the decorated object
     console.log(Reflect.getMetadata("design:type", target, propertyKey));

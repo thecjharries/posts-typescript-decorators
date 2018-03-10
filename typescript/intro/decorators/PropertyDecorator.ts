@@ -1,9 +1,9 @@
 export function PropertyDecorator(
     target: any,
-    propertyKey: any
+    propertyKey: any,
 ) {
     console.log(
         `Decorating property ${propertyKey}` +
-        ` from ${target.constructor.name}`
+        ` from ${target.constructor.name}`,
     );
 }

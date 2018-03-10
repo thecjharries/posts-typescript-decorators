@@ -1,14 +1,14 @@
 export function MaskMethod(hide: boolean) {
-    return function(
+    return (
         target: any,
         propertyKey: string,
-        descriptor: PropertyDescriptor
-    ) {
+        descriptor: PropertyDescriptor,
+    ) => {
         if (hide) {
             return {
                 get: undefined,
             };
         }
         return descriptor;
-    }
+    };
 }

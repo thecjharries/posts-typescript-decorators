@@ -7,14 +7,14 @@ export function updateParameterDescriptions(
     target: any,
     propertyKey: string | symbol,
     parameterIndex: number,
-    description: string
+    description: string,
 ) {
     // Pull the array of parameter names
     const parameterDescriptions = (
         Reflect.getOwnMetadata(
             PARAMETER_DESCRIPTION_KEY,
             target,
-            propertyKey
+            propertyKey,
         )
         ||
         []
@@ -26,16 +26,16 @@ export function updateParameterDescriptions(
         PARAMETER_DESCRIPTION_KEY,
         parameterDescriptions,
         target,
-        propertyKey
+        propertyKey,
     );
 }
 
 export function Description(description: string) {
-    return function(
+    return (
         target: any,
         propertyKey: string | symbol,
-        parameterIndex: number
-    ) {
+        parameterIndex: number,
+    ) => {
         // Update the parameter description metadata
         updateParameterDescriptions(
             target,
@@ -48,7 +48,7 @@ export function Description(description: string) {
             Reflect.getOwnMetadata(
                 PARAMETER_METADATA_KEY,
                 target,
-                propertyKey
+                propertyKey,
             )
             ||
             []
@@ -73,7 +73,7 @@ export function Description(description: string) {
             PARAMETER_METADATA_KEY,
             parameterMetadata,
             target,
-            propertyKey
+            propertyKey,
         );
-    }
+    };
 }
