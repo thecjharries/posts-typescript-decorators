@@ -1,6 +1,6 @@
 function LogMethod(
     target: any,
-    propertyKey: string,
+    propertyKey: string | symbol,
     descriptor: PropertyDescriptor,
 ) {
     console.log(target);

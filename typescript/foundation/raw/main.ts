@@ -1,6 +1,6 @@
 function Enumerable(
     target: any,
-    propertyKey: string,
+    propertyKey: string | symbol,
     descriptor: PropertyDescriptor,
 ) {
     descriptor.enumerable = true;

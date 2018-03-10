@@ -1,6 +1,6 @@
 function LogParameter(
     target: any,
-    propertyKey: string,
+    propertyKey: string | symbol,
     parameterIndex: number,
 ) {
     console.log(target);

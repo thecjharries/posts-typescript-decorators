@@ -1,6 +1,6 @@
 function LogProperty(
     target: any,
-    propertyKey: string,
+    propertyKey: string | symbol,
 ) {
     console.log(target);
     console.log(propertyKey);

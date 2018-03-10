@@ -1,6 +1,6 @@
 function DecoratedParameter(
     target: any,
-    propertyKey: string,
+    propertyKey: string | symbol,
     parameterIndex: number,
 ) {
     console.log("this.constructor.name:", this.constructor.name);

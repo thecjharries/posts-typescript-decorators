@@ -2,7 +2,7 @@ import "reflect-metadata";
 
 function LogMethod(
     target: any,
-    propertyKey: string,
+    propertyKey: string | symbol,
     descriptor: PropertyDescriptor,
 ) {
     // Checks the type of the decorated object

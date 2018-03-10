@@ -1,7 +1,7 @@
 export function MaskMethod(hide: boolean) {
     return (
         target: any,
-        propertyKey: string,
+        propertyKey: string | symbol,
         descriptor: PropertyDescriptor,
     ) => {
         if (hide) {

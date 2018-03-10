@@ -1,6 +1,6 @@
 export function PropertyDecorator(
     target: any,
-    propertyKey: any,
+    propertyKey: string | symbol,
 ) {
     console.log(
         `Decorating property ${propertyKey}` +
