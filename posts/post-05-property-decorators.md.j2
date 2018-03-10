@@ -10,7 +10,7 @@ Property decorators are very similar to [parameter decorators](https://blog.wiza
 
 Property decorators ignore any return, underscoring their inability to affect the decorated properties. [Similar to parameter decorators](https://blog.wizardsoftheweb.pro/typescript-decorators-reflection/#examplevalidateaparameterrange), property decorators can be used in tandem with other decorators to define extra information about the property. By themselves, their effectiveness is limited. [Logging property data](https://blog.wizardsoftheweb.pro/typescript-decorators-javascript-foundation/#propertydecorators) seems to be the best use for a property decorator by itself.
 
-Clever abuse of property descriptors can sidestep some of the restrictions on property decorators.
+A widely used antipattern is to update a property descriptor on `target` in a property decorator (if that doesn't make sense now, it should by the end of the post).
 
 ## Signature
 
