@@ -7,6 +7,8 @@ WIP.
 - [Finished](#finished)
 - [Want to Do](#wanttodo)
 - [Other TODO](#othertodo)
+    - [Open](#open)
+    - [Finished](#finished-1)
 - [License](#license)
 
 <!-- /MarkdownTOC -->
@@ -28,9 +30,14 @@ This is the code behind a series of posts about TypeScript decorators.
 
 ## Other TODO
 
-* Expand CLI args where possible (e.g. replace `-P` with `--project`)
-* Update `propertyKey`'s type everywhere (i.e. `string | symbol` not `string`)
+### Open
+
+### Finished
+
 * Create uniform example class names
+* Update `propertyKey`'s type everywhere (i.e. `string | symbol` not `string`)
+* Expand CLI args where possible (e.g. replace `-P` with `--project`)
+* Lint TS
 
 ## License
 
