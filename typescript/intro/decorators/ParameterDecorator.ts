@@ -1,5 +1,5 @@
 export function ParameterDecorator(
-    target: Object,
+    target: any,
     propertyKey: string,
     parameterIndex: number,
 ) {
