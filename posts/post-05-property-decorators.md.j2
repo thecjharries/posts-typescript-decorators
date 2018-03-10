@@ -44,22 +44,11 @@ This example is used to explain the signature.
 
 `propertyKey` is the name of the decorated property. It could also be [a `Symbol`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol), depending on how the property is defined on the object. `propertyKey` in the example is `foo`.
 
-### `descriptor: PropertyDescriptor`
-
-`descriptor` is [a `PropertyDescriptor`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty#Description). This is the object that JavaScript uses to inspect and modify the property. As such, it contains things like `enumerable` and `configurable` as well as modification information like `(g|s)et` or `value` and `writable`. In the example, `descriptor is
-
-{{
-    shell_session("""
-$ ts-node signature-example.ts
-{ value: 'bar',
-  writable: true,
-  enumerable: true,
-  configurable: true }
-""")
-}}
-
-
 ## Changing Mode
+
+There's a huge difference between property decorators in and out of strict mode.
+
+To [rehash what's happening under the hood](https://blog.wizardsoftheweb.pro/typescript-decorators-javascript-foundation/#prettifiedandpolished), property decorators have
 
 ### Strict Mode
 
