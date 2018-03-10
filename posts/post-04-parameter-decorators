@@ -12,6 +12,33 @@ Parameter decorators ignore any return, underlining their inability to affect th
 
 (If you've got a different or novel use for parameter decorators, I'd love to hear about it. Seriously. I'm really curious to see how other devs are using these. My email's in the footer.)
 
+### Class Method vs Global Function
+
+An interesting side-effect of decorators is that they (apparently) must be defined on class elements. You can't decorate globals unattached to a class.
+
+{{
+    highlight_block(
+        'typescript/parameters/overview/class-only.ts',
+        blob_path = 'typescript/parameters/overview/class-only.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'class-only.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/parameters/overview/class-only.ts'
+    )
+}}
+
+{{
+    shell_session('''
+$ ts-node class-only.ts
+TargetDemo { foo1: [Function] }
+foo1
+1
+Class method foo
+Global function foo
+''')
+}}
+
+Even though we've attempted to decorate the global function `foo`, it doesn't work. Notice how the decorated logging is only called once, not twice, and only with `foo1`. I suspect this is related to how all of these things are defined, and will probably be explored in another post.
+
 ## Signature
 
 {{
@@ -23,7 +50,6 @@ Parameter decorators ignore any return, underlining their inability to affect th
         external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/parameters/signature/signature.ts'
     )
 }}
-
 
 This example is used to explain the signature.
 
