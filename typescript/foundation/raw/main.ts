@@ -7,11 +7,11 @@ function Enumerable(
     return descriptor;
 }
 
-class RawDemoClass {
+class Demo {
     @Enumerable
     public foo() {
         // do nothing
     }
 }
 
-const demo = new RawDemoClass();
+const demo = new Demo();

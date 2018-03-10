@@ -12,12 +12,12 @@ function LogParameter(target, propertyKey, parameterIndex) {
     console.log(propertyKey);
     console.log(parameterIndex);
 }
-class ParameterDemoClass {
+class ParameterExample {
     logThis(first = "", greeting = "Hello, world") {
         // do nothing
     }
 }
 __decorate([
     __param(1, LogParameter)
-], ParameterDemoClass.prototype, "logThis", null);
-const parameterDemo = new ParameterDemoClass();
+], ParameterExample.prototype, "logThis", null);
+const demoParameter = new ParameterExample();

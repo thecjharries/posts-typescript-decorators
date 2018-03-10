@@ -8,7 +8,7 @@ function LogParameter(
     console.log(parameterIndex);
 }
 
-class ParameterDemoClass {
+class ParameterExample {
     public logThis(
         first: string = "",
         @LogParameter greeting: string = "Hello, world",
@@ -17,4 +17,4 @@ class ParameterDemoClass {
     }
 }
 
-const parameterDemo = new ParameterDemoClass();
+const demoParameter = new ParameterExample();

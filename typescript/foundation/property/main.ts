@@ -6,7 +6,7 @@ function LogProperty(
     console.log(propertyKey);
 }
 
-class PropertyDemoClass {
+class PropertyExample {
     @LogProperty
     public greeting: string;
 
@@ -14,4 +14,4 @@ class PropertyDemoClass {
         this.greeting = "Hello, world";
     }
 }
-const propertyDemo = new PropertyDemoClass();
+const demoExample = new PropertyExample();

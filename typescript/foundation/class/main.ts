@@ -3,8 +3,8 @@ function LogClass(target: any) {
 }
 
 @LogClass
-class ClassDemoClass {
+class ClassExample {
     // do nothing
 }
 
-const classDemo = new ClassDemoClass();
+const demoClass = new ClassExample();

@@ -8,10 +8,10 @@ function LogMethod(
     console.log(descriptor);
 }
 
-class MethodDemoClass {
+class MethodExample {
     @LogMethod
     public foo() {
         // do nothing
     }
 }
-const methodDemo = new MethodDemoClass();
+const demoMethod = new MethodExample();

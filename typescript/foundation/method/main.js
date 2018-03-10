@@ -9,12 +9,12 @@ function LogMethod(target, propertyKey, descriptor) {
     console.log(propertyKey);
     console.log(descriptor);
 }
-class MethodDemoClass {
+class MethodExample {
     foo() {
         // do nothing
     }
 }
 __decorate([
     LogMethod
-], MethodDemoClass.prototype, "foo", null);
-const methodDemo = new MethodDemoClass();
+], MethodExample.prototype, "foo", null);
+const demoMethod = new MethodExample();

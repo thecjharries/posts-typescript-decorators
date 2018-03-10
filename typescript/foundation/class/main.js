@@ -7,9 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 function LogClass(target) {
     console.log(target.constructor.name);
 }
-let ClassDemoClass = class ClassDemoClass {
+let ClassExample = class ClassExample {
 };
-ClassDemoClass = __decorate([
+ClassExample = __decorate([
     LogClass
-], ClassDemoClass);
-const classDemo = new ClassDemoClass();
+], ClassExample);
+const demoClass = new ClassExample();
