@@ -48,6 +48,64 @@ This example is used to explain the signature.
 
 ### Attach Metadata
 
+{{
+    highlight_block(
+        'typescript/properties/usage/arbitrary/constants.ts',
+        blob_path = 'typescript/properties/usage/arbitrary/constants.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'arbitrary/constants.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/properties/usage/arbitrary/constants.ts'
+    )
+}}
+
+First we define the metadata key and `export` it for anything to `import`.
+
+{{
+    highlight_block(
+        'typescript/properties/usage/arbitrary/interfaces.ts',
+        blob_path = 'typescript/properties/usage/arbitrary/interfaces.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'arbitrary/interfaces.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/properties/usage/arbitrary/interfaces.ts'
+    )
+}}
+
+This defines `ISinglePropertyMetadata` and `IAllPropertyMetadata` to streamline manipulation. It's usually better to have types to rely on.
+
+{{
+    highlight_block(
+        'typescript/properties/usage/arbitrary/PropertyMetadata.ts',
+        blob_path = 'typescript/properties/usage/arbitrary/PropertyMetadata.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'arbitrary/PropertyMetadata.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/properties/usage/arbitrary/PropertyMetadata.ts'
+    )
+}}
+
+The `PropertyMetadata` decorator updates both a property's metadata name and description. It consumes an `ISinglePropertyMetadata` object to load the values.
+
+{{
+    highlight_block(
+        'typescript/properties/usage/arbitrary/main.ts',
+        blob_path = 'typescript/properties/usage/arbitrary/main.ts',
+        explicit_lexer_name = 'TypeScriptLexer',
+        title = 'arbitrary/main.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/properties/usage/arbitrary/main.ts'
+    )
+}}
+
+Putting everything together, we can decorate at will.
+
+{{
+    shell_session("""
+$ ts-node arbitrary/main.ts
+Class property metadata: undefined
+Instance property metadata: { foo: { name: 'foo' },
+  bar: { description: 'property bar' },
+  baz: { name: 'baz', description: 'property baz' } }
+""")
+}}
+
 ## Recap
 
 {% endblock %}
