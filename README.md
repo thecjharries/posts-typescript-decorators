@@ -23,6 +23,7 @@ This is the code behind a series of posts about TypeScript decorators.
 * Property Decorators
 * Method Decorators
 * Class Decorators
+* Where Decorators Work
 
 ## License
 
