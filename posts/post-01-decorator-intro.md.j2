@@ -61,29 +61,28 @@ Next we'll need to consume the decorators. The decorators are placed before the 
 
 {{
     highlight_block(
-        'typescript/intro/SimpleClass.ts',
-        blob_path = 'typescript/intro/SimpleClass.ts',
+        'typescript/intro/main.ts',
+        blob_path = 'typescript/intro/main.ts',
         explicit_lexer_name = 'TypeScriptLexer',
-        title = 'SimpleClass.ts',
-        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/intro/SimpleClass.ts'
+        title = 'main.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/intro/main.ts'
     )
 }}
 
 {{
     shell_session('''
-$ ts-node SimpleClass.ts
-Decorating property foo from SimpleClass
-Decorating method bar from SimpleClass
-Decorating parameter writeGreeting (index 0) from SimpleClass
-Decorating method writeGreeting from SimpleClass
-Decorating SimpleClass
+$ ts-node main.ts
+Decorating property foo from Demo
+Decorating method bar from Demo
+Decorating parameter writeGreeting (index 0) from Demo
+Decorating method writeGreeting from Demo
+Decorating Demo
 Simple class initialized
 Hello, world
 ''')
 }}
 
 The execution order is [explained in the docs](https://www.typescriptlang.org/docs/handbook/decorators.html#decorator-evaluation); to summarize,
-
 
 1. instance parameter, method, and property decorators;
 2. static parameter, method, and property decorators;
@@ -128,32 +127,32 @@ We can use this decorator everywhere thanks to [rest parameters](https://develop
 
 {{
     highlight_block(
-        'typescript/factories/SimpleClass.ts',
-        blob_path = 'typescript/factories/SimpleClass.ts',
+        'typescript/factories/main.ts',
+        blob_path = 'typescript/factories/main.ts',
         explicit_lexer_name = 'TypeScriptLexer',
-        title = 'SimpleClass.ts',
-        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/factories/SimpleClass.ts'
+        title = 'main.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/factories/main.ts'
     )
 }}
 
 {{
     shell_session("""
-$ ts-node SimpleClass.ts
-property [ SimpleClass {}, 'foo', undefined ]
-accessor [ SimpleClass {},
+$ ts-node main.ts
+property [ Demo {}, 'foo', undefined ]
+accessor [ Demo {},
   'bar',
   { get: [Function: get bar],
     set: undefined,
     enumerable: false,
     configurable: true } ]
-parameter [ SimpleClass {}, 'writeGreeting', 0 ]
-method [ SimpleClass {},
+parameter [ Demo {}, 'writeGreeting', 0 ]
+method [ Demo {},
   'writeGreeting',
   { value: [Function: writeGreeting],
     writable: true,
     enumerable: false,
     configurable: true } ]
-class [ [Function: SimpleClass] ]
+class [ [Function: Demo] ]
 Simple class initialized
 Hello, world
 """)
@@ -175,17 +174,17 @@ This decorator can hide methods at run time by tweaking [the property descriptor
 
 {{
     highlight_block(
-        'typescript/factories/MaskableMethodsClass.ts',
-        blob_path = 'typescript/factories/MaskableMethodsClass.ts',
+        'typescript/factories/other-main.ts',
+        blob_path = 'typescript/factories/other-main.ts',
         explicit_lexer_name = 'TypeScriptLexer',
-        title = 'MaskableMethodsClass.ts',
-        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/factories/MaskableMethodsClass.ts'
+        title = 'other-main.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/factories/other-main.ts'
     )
 }}
 
 {{
     shell_session('''
-$ ts-node MaskableMethodsClass.ts
+$ ts-node other-main.ts
 foo undefined
 bar bar() {
         console.log("bar");
@@ -213,17 +212,17 @@ This decorator updates the `enumerable` property of methods, showing/hiding them
 
 {{
     highlight_block(
-        'typescript/composition/SimpleClass.ts',
-        blob_path = 'typescript/composition/SimpleClass.ts',
+        'typescript/composition/main.ts',
+        blob_path = 'typescript/composition/main.ts',
         explicit_lexer_name = 'TypeScriptLexer',
-        title = 'SimpleClass.ts',
-        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/composition/SimpleClass.ts'
+        title = 'main.ts',
+        external_source_link = 'https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/composition/main.ts'
     )
 }}
 
 {{
     shell_session('''
-$ ts-node SimpleClass.ts
+$ ts-node main.ts
 Creating enumerable property factory
 Making isEnumerable enumerable
 Creating enumerable property factory
