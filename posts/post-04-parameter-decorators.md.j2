@@ -80,8 +80,6 @@ This example is used to explain the signature.
 
 I haven't noticed any difference between parameter decorators in strict mode and those not in strict mode. The passed-in context doesn't seem to be the owning object, and, again, as the return is ignored, I'm not sure there's even a convoluted way to access the parameters themselves. Both are able to modify `target`, as always. The examples below just illustrate the differences between `this`; I also don't see a use for one over the other (aside from the flexibility differences in and out of strict mode, which is a different topic).
 
-To [rehash what's happening under the hood](https://blog.wizardsoftheweb.pro/typescript-decorators-javascript-foundation/#prettifiedandpolished), parameter decorators have three parameters, so the decorator is [only called with `target` and `propertyKey`](https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/pretty/decorate.js#L35). Again, because parameter decorators have three parameters, the decorator's return is [returned from the decoration](https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/pretty/decorate.js#L50). However, as `__decorate` isn't used (e.g. [called but not assigned](https://github.com/thecjharries/posts-typescript-decorators/blob/master/typescript/foundation/raw/main.js#L16)), nothing happens.
-
 ### Strict Mode
 
 {{
