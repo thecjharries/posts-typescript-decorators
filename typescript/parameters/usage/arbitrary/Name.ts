@@ -75,5 +75,5 @@ export function Name(name: string) {
             target,
             propertyKey,
         );
-    }
+    };
 }

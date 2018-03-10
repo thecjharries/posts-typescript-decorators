@@ -5,7 +5,7 @@ function DecoratedParameter(
 ) {
     console.log("this.constructor.name:", this.constructor.name);
     console.log("target.constructor.name:", target.constructor.name);
-    console.log(`this ${this === target ? '=' : '!'}== target`);
+    console.log(`this ${this === target ? "=" : "!"}== target`);
     target.stringProperty = "changed in decorator";
 }
 

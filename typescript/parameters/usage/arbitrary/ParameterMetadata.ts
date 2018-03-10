@@ -48,5 +48,5 @@ export function ParameterMetadata(name: string, description: string) {
             target,
             propertyKey,
         );
-    }
+    };
 }

@@ -4,6 +4,6 @@ export function PropertyDecorator(
 ) {
     console.log(
         `Decorating property ${propertyKey}` +
-        ` from ${target.constructor.name}`
+        ` from ${target.constructor.name}`,
     );
 }

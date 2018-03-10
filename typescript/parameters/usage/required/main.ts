@@ -15,7 +15,7 @@ class RequiredDemoClass {
 console.log(Reflect.getMetadata(
     REQUIRED_KEY,
     RequiredDemoClass,
-    "foo"
+    "foo",
 ));
 // undefined
 
@@ -25,6 +25,6 @@ const requiredDemo = new RequiredDemoClass();
 console.log(Reflect.getMetadata(
     REQUIRED_KEY,
     requiredDemo,
-    "foo"
+    "foo",
 ));
 // [ 0, 2 ]

@@ -10,5 +10,5 @@ export function MaskMethod(hide: boolean) {
             };
         }
         return descriptor;
-    }
+    };
 }

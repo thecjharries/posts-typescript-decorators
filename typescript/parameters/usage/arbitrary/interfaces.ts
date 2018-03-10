@@ -3,4 +3,4 @@ export interface IParameterMetadata {
     description: string;
 }
 
-export type SignatureMetadataType = Array<IParameterMetadata>;
+export type SignatureMetadataType = IParameterMetadata[];

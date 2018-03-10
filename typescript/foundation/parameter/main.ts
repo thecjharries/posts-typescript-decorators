@@ -11,7 +11,7 @@ function LogParameter(
 class ParameterDemoClass {
     public logThis(
         first: string = "",
-        @LogParameter greeting: string = "Hello, world"
+        @LogParameter greeting: string = "Hello, world",
     ) {
         // do nothing
     }

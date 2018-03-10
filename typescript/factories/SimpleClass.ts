@@ -17,7 +17,7 @@ class SimpleClass {
 
     @Decorator("method")
     public writeGreeting(
-        @Decorator("parameter") public greeting: string = "Hello, world"
+        @Decorator("parameter") public greeting: string = "Hello, world",
     ) {
         console.log(greeting);
     }

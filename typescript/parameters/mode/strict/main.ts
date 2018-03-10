@@ -6,7 +6,7 @@ function DecoratedParameter(
     try {
         console.log("this.constructor.name:", this.constructor.name);
         console.log("target.constructor.name:", target.constructor.name);
-        console.log(`this ${this === target ? '=' : '!'}== target`);
+        console.log(`this ${this === target ? "=" : "!"}== target`);
     } catch (error) {
         console.log("TypeError: Cannot read property 'constructor' of undefined");
     }

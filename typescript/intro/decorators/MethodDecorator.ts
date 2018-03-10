@@ -5,6 +5,6 @@ export function MethodDecorator(
 ) {
     console.log(
         `Decorating method ${propertyKey}` +
-        ` from ${target.constructor.name}`
+        ` from ${target.constructor.name}`,
     );
 }

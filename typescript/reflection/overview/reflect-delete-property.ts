@@ -4,7 +4,7 @@
         one: 1,
         two: 2,
         three: 3,
-    }
+    };
 
     // Delete a property with delete
     console.log(delete sampleDeleteObject.one);
@@ -25,4 +25,4 @@
     // true
     console.log(sampleDeleteObject);
     // { three: 3 }
-})()
+})();
