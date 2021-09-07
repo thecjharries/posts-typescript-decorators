@@ -15,5 +15,5 @@ class MaskableMethods {
 const demoMaskableMethods = new MaskableMethods();
 
 for (const key of ["foo", "bar"]) {
-    console.log(key, demo[key]);
+    console.log(key, demoMaskableMethods[key]);
 }
